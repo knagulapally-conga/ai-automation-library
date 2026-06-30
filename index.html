@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Automation Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-0: #f4f8f8;
+      --bg-1: #e8f1f1;
+      --text-0: #122229;
+      --text-1: #38505c;
+      --line: #d1dfe0;
+      --card: #ffffff;
+      --accent: #0f766e;
+      --accent-soft: #d4f0ed;
+      --shadow: 0 10px 28px rgba(13, 39, 47, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", sans-serif;
+      color: var(--text-0);
+      background:
+        radial-gradient(1000px 500px at 5% -10%, #cdece8 0%, rgba(205, 236, 232, 0) 70%),
+        radial-gradient(1200px 700px at 90% -10%, #e8ead5 0%, rgba(232, 234, 213, 0) 75%),
+        linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 28px 20px 36px;
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      backdrop-filter: blur(6px);
+    }
+
+    .title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--text-1);
+      font-size: 1rem;
+    }
+
+    .meta-pill {
+      background: #f0fbfa;
+      color: #0d5f58;
+      border: 1px solid #c5e7e4;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(4, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .control {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      min-height: 42px;
+      padding: 10px 12px;
+      color: var(--text-0);
+      font: inherit;
+    }
+
+    .control:focus {
+      outline: 2px solid #8ed8d2;
+      border-color: #8ed8d2;
+    }
+
+    .stats {
+      margin: 14px 0 0;
+      color: var(--text-1);
+      font-size: 0.94rem;
+    }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 285px;
+      overflow: hidden;
+    }
+
+    .card-top {
+      padding: 16px;
+      border-bottom: 1px solid #edf3f3;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .status {
+      border-radius: 999px;
+      font-size: 0.76rem;
+      padding: 6px 10px;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .ready { background: #dcfce7; color: #166534; border-color: #b9efcb; }
+    .setup { background: #fef3c7; color: #92400e; border-color: #f8de95; }
+    .experimental { background: #e7ecff; color: #1d4ed8; border-color: #cbd9ff; }
+
+    .card-body {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .name {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.08rem;
+      line-height: 1.3;
+    }
+
+    .desc {
+      margin: 0;
+      color: var(--text-1);
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      color: var(--text-1);
+      font-size: 0.86rem;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      color: #0d5f58;
+      border: 1px solid #b4e2dc;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .tool-chip {
+      background: #f5f8f8;
+      border: 1px solid #dbe7e8;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 0.76rem;
+      color: #2d4c57;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px 16px;
+      border-top: 1px solid #edf3f3;
+    }
+
+    .button {
+      border: none;
+      border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .owner {
+      color: var(--text-1);
+      font-size: 0.84rem;
+    }
+
+    .panel {
+      position: fixed;
+      top: 0;
+      right: -640px;
+      width: min(640px, 100vw);
+      height: 100vh;
+      background: #fff;
+      box-shadow: -18px 0 40px rgba(13, 39, 47, 0.22);
+      transition: right 0.28s ease;
+      z-index: 20;
+      overflow-y: auto;
+      border-left: 1px solid var(--line);
+    }
+
+    .panel.open {
+      right: 0;
+    }
+
+    .panel-header {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 18px 14px;
+      z-index: 2;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.35rem;
+    }
+
+    .panel-close {
+      float: right;
+      border: 1px solid var(--line);
+      background: #f7fbfb;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .panel-body {
+      padding: 16px 18px 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .detail-block {
+      border: 1px solid #e3eded;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fbfdfd;
+    }
+
+    .detail-block h3 {
+      margin: 0 0 8px;
+      font-size: 0.95rem;
+      color: #21444f;
+    }
+
+    .detail-block p,
+    .detail-block li {
+      margin: 0;
+      color: #294954;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .detail-block ul {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 29, 33, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 18;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .empty {
+      margin-top: 20px;
+      border: 1px dashed #9ab5b9;
+      border-radius: 14px;
+      padding: 24px;
+      background: #f7fbfb;
+      color: #38505c;
+      text-align: center;
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .controls {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .title-wrap {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="title-wrap">
+        <div>
+          <h1>AI Automation Library</h1>
+          <p class="subtitle">Reusable automations available across the organization</p>
+        </div>
+        <span class="meta-pill" id="sourceMeta">Source: C:\repos + connected GitHub repos</span>
+      </div>
+
+      <div class="controls">
+        <input id="searchInput" class="control" type="search" placeholder="Search automation, outcome, owner, or keyword" />
+        <select id="functionFilter" class="control"><option value="">Function: All</option></select>
+        <select id="toolFilter" class="control"><option value="">Tool: All</option></select>
+        <select id="complexityFilter" class="control"><option value="">Complexity: All</option></select>
+        <select id="teamFilter" class="control"><option value="">Team/Pillar: All</option></select>
+      </div>
+
+      <p class="stats" id="resultStats"></p>
+    </section>
+
+    <section id="grid" class="grid"></section>
+    <div id="emptyState" class="empty">No automations match the current filters. Try clearing one or more filters.</div>
+  </div>
+
+  <div id="overlay" class="overlay" aria-hidden="true"></div>
+
+  <aside id="detailPanel" class="panel" aria-hidden="true">
+    <div class="panel-header">
+      <button id="closePanel" class="panel-close">Close</button>
+      <h2 id="panelTitle" class="panel-title"></h2>
+      <div id="panelTags" class="row" style="margin-top: 8px;"></div>
+    </div>
+    <div id="panelBody" class="panel-body"></div>
+  </aside>
+
+  <script>
+    const automations = [
+      {
+        id: "sprint-health-monitoring-agent",
+        name: "Sprint Health Monitoring Agent",
+        description: "Tracks sprint progress and flags delivery risks before sprint close.",
+        function: "Sprint Management",
+        tools: ["Jira", "Copilot", "Power Automate"],
+        complexity: "Advanced",
+        team: "CODS",
+        impact: "Saves ~2 hours per sprint",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/cods-sprint-agent + GitHub: knagulapally-conga/cods-sprint-agent",
+        problem: "Sprint risk signals are spread across multiple Jira views and hard to act on quickly.",
+        does: [
+          "Fetches sprint history and current sprint signals.",
+          "Detects spillover, commitment drift, and owner concentration.",
+          "Produces prioritized risk insights for sprint leads.",
+          "Supports webhook and notification workflows for follow-ups."
+        ],
+        whenToUse: "Use during sprint execution and pre-close checks for CODS teams.",
+        flow: "Trigger: scheduled run or webhook -> Logic: signal analysis + pattern checks -> Action: risk summary and follow-up prompts",
+        reuseSteps: [
+          "Clone the sprint-agent repo and configure Jira credentials.",
+          "Set board/sprint scope for your team.",
+          "Run sprint_agent.py or scheduled wrapper.",
+          "Connect output to team notification channel."
+        ],
+        inputs: ["Board IDs", "Sprint ID/name", "Team mapping", "Assignee metadata"],
+        sampleOutput: "Top risks this sprint: Spillover trend rising in 2 teams; 4 issues require reassignment by EOD.",
+        dependencies: "Needs Jira API access and stable board taxonomy.",
+        version: "v1.x",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "auto-sla-breach-alert",
+        name: "Auto SLA Breach Alert",
+        description: "Alerts teams ahead of SLA breach windows for faster incident response.",
+        function: "Support / Ops",
+        tools: ["Jira", "Power Automate"],
+        complexity: "Medium",
+        team: "OSM",
+        impact: "Reduces near-breach misses in weekly support queues",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        source: "C:/repos/osm-dashboard/weekly_sla assets",
+        problem: "Breaches are often identified late, causing avoidable escalation and customer impact.",
+        does: [
+          "Monitors issue age/SLA windows from Jira.",
+          "Identifies near-breach tickets by configured threshold.",
+          "Builds alert payload grouped by pillar/team.",
+          "Routes notifications for early action."
+        ],
+        whenToUse: "Use in support operations where SLA compliance is a weekly KPI.",
+        flow: "Trigger: hourly/daily schedule -> Logic: SLA threshold check -> Action: proactive alert to team owners",
+        reuseSteps: [
+          "Configure JQL and SLA thresholds.",
+          "Map recipients by pillar/team.",
+          "Enable Power Automate flow for alerts.",
+          "Pilot for one week and tune thresholds."
+        ],
+        inputs: ["JQL scope", "Threshold hours/days", "Notification channels"],
+        sampleOutput: "Alert: 7 tickets entering breach window in next 24h (Platform: 3, CLM: 2, Revenue: 2).",
+        dependencies: "SLA fields and status mapping must be standardized.",
+        version: "pilot",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "weekly-status-report-generator",
+        name: "Weekly Status Report Generator",
+        description: "Generates weekly executive/project status reports directly from Jira data.",
+        function: "Reporting",
+        tools: ["Jira", "Excel", "Copilot"],
+        complexity: "Medium",
+        team: "Leadership",
+        impact: "Saves 3-4 hours per weekly report cycle",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/conga-master-dashboard/out + MAILER_NEWSLETTER_HTML_EXPORT",
+        problem: "Weekly reporting is repetitive and inconsistent across teams.",
+        does: [
+          "Pulls Jira metrics for selected scope.",
+          "Builds consistent KPI tiles and commentary.",
+          "Renders email-friendly HTML preview.",
+          "Produces ready-to-share leadership summary."
+        ],
+        whenToUse: "Use for weekly PMO/leadership status publishing.",
+        flow: "Trigger: weekly schedule -> Logic: aggregate + summarize -> Action: publish HTML/email report",
+        reuseSteps: [
+          "Set project/board scope and report template.",
+          "Configure output destination (mail/sharepoint).",
+          "Run weekly render script.",
+          "Review and send."
+        ],
+        inputs: ["Project list", "Date window", "KPI definitions", "Distribution list"],
+        sampleOutput: "Week summary: 132 open items across tracked queues; 3 immediate owner actions required.",
+        dependencies: "Depends on stable KPI definitions and Jira access.",
+        version: "v1.2",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "sprint-spillover-truth-report",
+        name: "Sprint Spillover Truth Report",
+        description: "Builds an executive spillover report with root-cause narrative and actions.",
+        function: "Sprint Management",
+        tools: ["Python", "PowerShell", "HTML"],
+        complexity: "Medium",
+        team: "CODS",
+        impact: "Converts manual sprint postmortem into one-command pipeline",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/Automated Sprint Spillover Analysis Report + GitHub: knagulapally-conga/Automated-Sprint-Spillover-Analysis",
+        problem: "Spillover decisions were made without a single source of sprint truth.",
+        does: [
+          "Calculates issue-level spillover metrics.",
+          "Generates HTML report with risk register.",
+          "Exports supporting CSV evidence.",
+          "Supports scripted mail dispatch."
+        ],
+        whenToUse: "Use after sprint close or before planning the next sprint.",
+        flow: "Trigger: run pipeline script -> Logic: compute spillover metrics -> Action: publish report + optional email",
+        reuseSteps: [
+          "Provide sprint and issue inputs (CSV or live fetch).",
+          "Run generate_report.ps1.",
+          "Validate risk findings.",
+          "Share report with stakeholders."
+        ],
+        inputs: ["Sprint metadata", "Issue dataset", "Owner/team mapping"],
+        sampleOutput: "Spillover risk: 18% from unresolved dependencies, 11% from ownership delay.",
+        dependencies: "Requires consistent sprint field mapping.",
+        version: "v1.0",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "cods-ops-maturity-auto-refresh",
+        name: "CODS Ops Maturity Auto-Refresh",
+        description: "Refreshes CODS+OSM defect dashboard, publishes output, and triggers email.",
+        function: "Reporting",
+        tools: ["Jira", "PowerShell", "Python", "Power Automate"],
+        complexity: "Advanced",
+        team: "CODS / OSM",
+        impact: "Replaces manual KPI update workflow with full refresh in minutes",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/cods-maturity-dashboard + GitHub: knagulapally-conga/cods-maturity-dashboard",
+        problem: "Ops leadership dashboards required repeated manual refresh, publish, and broadcast steps.",
+        does: [
+          "Fetches live Jira data for key queues.",
+          "Computes KPIs, trends, and table views.",
+          "Embeds JSON into dashboard HTML.",
+          "Publishes to SharePoint and dispatches email."
+        ],
+        whenToUse: "Use for daily leadership refresh or on-demand updates.",
+        flow: "Trigger: run_refresh.ps1 -> Logic: refresh_ops_dashboard.py -> Action: publish + email",
+        reuseSteps: [
+          "Configure Jira credentials and environment.",
+          "Validate JQL scope and field mapping.",
+          "Run run_refresh.ps1.",
+          "Open local dashboard for parity check."
+        ],
+        inputs: ["Jira URL/token", "JQL definitions", "Publish path", "Distribution list"],
+        sampleOutput: "Dashboard updated: CODS P1=5, CODS P2=42, OSM=85, Total=132.",
+        dependencies: "Depends on Jira availability and SharePoint publish access.",
+        version: "v2.x",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "cods-sprint-pulse",
+        name: "CODS Sprint Pulse Dashboard Pipeline",
+        description: "Builds cross-team sprint risk, velocity, and burndown views from one data pipeline.",
+        function: "Sprint Management",
+        tools: ["Jira", "Python", "PowerShell"],
+        complexity: "Advanced",
+        team: "CODS",
+        impact: "Provides one view for 5-team sprint triage and trend diagnosis",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/cods-sprint-pulse",
+        problem: "Sprint risk signals across teams were fragmented and delayed.",
+        does: [
+          "Fetches sprints and commits from multiple CODS boards.",
+          "Computes velocity and workload metrics.",
+          "Renders burndown and workload dashboards.",
+          "Supports pre-close operational check."
+        ],
+        whenToUse: "Use weekly during sprint execution and before sprint closure.",
+        flow: "Trigger: scheduled/manual run -> Logic: metric computation -> Action: dashboard outputs",
+        reuseSteps: [
+          "Set board IDs and team mapping.",
+          "Run compute/fetch scripts.",
+          "Render dashboard artifacts.",
+          "Share risk snapshot with scrum leads."
+        ],
+        inputs: ["Board IDs", "Sprint window", "Story point mapping"],
+        sampleOutput: "Program trend: 2 teams at spillover risk this sprint; 1 team improving velocity.",
+        dependencies: "Stable board-level sprint issue endpoint and SP field mapping.",
+        version: "v1.x",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "osm-monthly-exec-dashboard",
+        name: "OSM Monthly Executive Dashboard Automation",
+        description: "Runs end-to-end monthly OSM dashboard pipeline from Jira to Confluence and email.",
+        function: "Reporting",
+        tools: ["Jira", "Confluence", "Outlook", "PowerShell"],
+        complexity: "Advanced",
+        team: "OSM",
+        impact: "Automates monthly CXO reporting chain with reproducible outputs",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/osm-dashboard",
+        problem: "Monthly executive dashboard preparation was manual and difficult to reproduce.",
+        does: [
+          "Fetches OSM datasets and chart inputs.",
+          "Builds dashboard and support artifacts.",
+          "Publishes to Confluence.",
+          "Sends final email summary."
+        ],
+        whenToUse: "Use for monthly executive reporting cycles.",
+        flow: "Trigger: run_monthly.ps1 -> Logic: fetch/build/render/publish -> Action: Confluence + email",
+        reuseSteps: [
+          "Configure project scopes and credentials.",
+          "Run monthly pipeline.",
+          "Validate generated charts and KPIs.",
+          "Send executive package."
+        ],
+        inputs: ["Month range", "Project scope", "Confluence target", "Mail recipients"],
+        sampleOutput: "Published OSM dashboard for June 2026 with validated scorecard and trend views.",
+        dependencies: "Requires Confluence page permissions and SMTP/email connectivity.",
+        version: "v1.0",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "hosting-impact-agent",
+        name: "Hosting Impact Cost Estimator Agent",
+        description: "Transforms Jira epic requirements into hosting impact and monthly cost range.",
+        function: "DevOps",
+        tools: ["Jira", "Copilot", "Python"],
+        complexity: "Advanced",
+        team: "FinOps / Architecture",
+        impact: "Speeds cost impact governance for Cost Impact-required epics",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/hosting_impact + GitHub: knagulapally-conga/hosting_impact",
+        problem: "Epic-level cost impact estimation was inconsistent and often delayed.",
+        does: [
+          "Extracts signals from epic requirements.",
+          "Maps features to hosting cost buckets.",
+          "Computes low/high monthly range.",
+          "Generates report with risk callouts."
+        ],
+        whenToUse: "Use during epic review when Cost Impact is marked Yes.",
+        flow: "Trigger: epic intake -> Logic: signal extraction + bucket mapping -> Action: impact report",
+        reuseSteps: [
+          "Configure Jira access and cost model.",
+          "Run hosting_impact.run for selected epic.",
+          "Review generated cost range.",
+          "Attach report to governance process."
+        ],
+        inputs: ["Epic key", "Requirement text", "Pricing assumptions"],
+        sampleOutput: "Estimated hosting impact: $1,800-$2,600/month; risk: high egress growth.",
+        dependencies: "Cost bucket model needs periodic update.",
+        version: "v1.1",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "org-releases-tracker",
+        name: "Org Releases Tracker Dashboard",
+        description: "Rolls up Jira release commitments across product streams into one executive view.",
+        function: "Reporting",
+        tools: ["Jira", "Python", "PowerShell"],
+        complexity: "Medium",
+        team: "PMO",
+        impact: "Provides one-click org-level release health visibility",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/releases-org-tracker",
+        problem: "Release status was tracked project-by-project without org-level alignment.",
+        does: [
+          "Fetches release-commit issue data across projects.",
+          "Builds overview and per-project tabs.",
+          "Produces executive HTML dashboard.",
+          "Supports scheduled refresh."
+        ],
+        whenToUse: "Use for org release reviews and leadership updates.",
+        flow: "Trigger: refresh.ps1 -> Logic: fetch + aggregate -> Action: org dashboard output",
+        reuseSteps: [
+          "Set projects in config.",
+          "Run refresh script.",
+          "Review project tabs.",
+          "Publish to release stakeholders."
+        ],
+        inputs: ["Project keys", "Release fields", "Commit linkage rules"],
+        sampleOutput: "Org release view generated across 9 product streams with per-project risk splits.",
+        dependencies: "Requires consistent release metadata across projects.",
+        version: "v1.1",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "master-dashboard-composer",
+        name: "Master Dashboard Composer",
+        description: "Composes master leadership dashboard from multiple domain dashboards and weekly reports.",
+        function: "Reporting",
+        tools: ["Python", "PowerShell", "HTML"],
+        complexity: "Advanced",
+        team: "Leadership",
+        impact: "Unifies separate operational views into a single cockpit",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        source: "C:/repos/conga-master-dashboard",
+        problem: "Leadership needed one pane of glass across change, DORA, and weekly health streams.",
+        does: [
+          "Builds shared state from multiple feeders.",
+          "Renders master and audience-specific dashboard variants.",
+          "Bundles shareable outputs.",
+          "Supports hourly refresh installation."
+        ],
+        whenToUse: "Use when combining multiple reporting surfaces into one leadership view.",
+        flow: "Trigger: scheduled build_state -> Logic: merge + render -> Action: master dashboard publish",
+        reuseSteps: [
+          "Configure source feeders.",
+          "Run build and render scripts.",
+          "Validate data contracts.",
+          "Publish latest output."
+        ],
+        inputs: ["Source output paths", "KPI contracts", "Audience presets"],
+        sampleOutput: "Master dashboard refreshed with change, DORA, and weekly executive sections.",
+        dependencies: "Dependent feeder schemas must remain stable.",
+        version: "v0.9",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "resource-optimization-refresh",
+        name: "Resource Optimization Refresh",
+        description: "Generates workload optimization view from Jira data with a single refresh command.",
+        function: "Reporting",
+        tools: ["Jira", "Python", "PowerShell"],
+        complexity: "Basic",
+        team: "PMO",
+        impact: "Turns ad hoc capacity analysis into repeatable runbook",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/Resource-Optimization",
+        problem: "Capacity and workload decisions were often made from stale snapshots.",
+        does: [
+          "Pulls current Jira workload inputs.",
+          "Renders optimization-focused report.",
+          "Supports optional auto-open report flow."
+        ],
+        whenToUse: "Use before planning and resourcing meetings.",
+        flow: "Trigger: refresh.ps1 -> Logic: fetch + render -> Action: workload report",
+        reuseSteps: [
+          "Set Jira credentials.",
+          "Run refresh.ps1.",
+          "Review report and rebalance actions."
+        ],
+        inputs: ["Team scope", "Assignee mapping", "Workload thresholds"],
+        sampleOutput: "Workload report identifies 3 overloaded owners and 2 underutilized lanes.",
+        dependencies: "Needs accurate assignee/team mapping.",
+        version: "v1.0",
+        lastUpdated: "2026-06-30"
+      },
+      {
+        id: "jira-to-email-newsletter-builder",
+        name: "Jira-to-Email Newsletter Builder",
+        description: "Builds polished email previews from dashboard/report outputs for stakeholder communication.",
+        function: "Support",
+        tools: ["HTML", "Outlook", "Power Automate"],
+        complexity: "Basic",
+        team: "Shared Services",
+        impact: "Cuts manual newsletter formatting time each cycle",
+        owner: "Kranthi",
+        status: "Experimental",
+        source: "C:/repos/MAILER_NEWSLETTER_HTML_EXPORT",
+        problem: "Cross-team communications required repeated copy/paste and formatting fixes.",
+        does: [
+          "Collects generated report artifacts.",
+          "Produces email-safe HTML previews.",
+          "Supports reuse across OSM and executive weekly updates."
+        ],
+        whenToUse: "Use when distributing report highlights to broad audiences.",
+        flow: "Trigger: report ready -> Logic: format conversion -> Action: email-ready HTML",
+        reuseSteps: [
+          "Select source report HTML.",
+          "Generate preview template.",
+          "Send via mail workflow."
+        ],
+        inputs: ["Report HTML", "Audience template", "Distribution list"],
+        sampleOutput: "Email preview generated for weekly CXO update with responsive formatting.",
+        dependencies: "Template consistency across source reports.",
+        version: "beta",
+        lastUpdated: "2026-06-30"
+      }
+    ];
+
+    const grid = document.getElementById("grid");
+    const emptyState = document.getElementById("emptyState");
+    const resultStats = document.getElementById("resultStats");
+
+    const filters = {
+      search: document.getElementById("searchInput"),
+      function: document.getElementById("functionFilter"),
+      tool: document.getElementById("toolFilter"),
+      complexity: document.getElementById("complexityFilter"),
+      team: document.getElementById("teamFilter")
+    };
+
+    const panel = document.getElementById("detailPanel");
+    const overlay = document.getElementById("overlay");
+    const closePanel = document.getElementById("closePanel");
+    const panelTitle = document.getElementById("panelTitle");
+    const panelTags = document.getElementById("panelTags");
+    const panelBody = document.getElementById("panelBody");
+
+    function normalizeStatusClass(status) {
+      if (status === "Ready to Use") return "ready";
+      if (status === "Needs Setup") return "setup";
+      return "experimental";
+    }
+
+    function fillFilterOptions() {
+      const unique = {
+        function: [...new Set(automations.map((a) => a.function))].sort(),
+        tool: [...new Set(automations.flatMap((a) => a.tools))].sort(),
+        complexity: [...new Set(automations.map((a) => a.complexity))],
+        team: [...new Set(automations.map((a) => a.team))].sort()
+      };
+
+      unique.function.forEach((v) => filters.function.add(new Option(v, v)));
+      unique.tool.forEach((v) => filters.tool.add(new Option(v, v)));
+      unique.complexity.forEach((v) => filters.complexity.add(new Option(v, v)));
+      unique.team.forEach((v) => filters.team.add(new Option(v, v)));
+    }
+
+    function getFilteredData() {
+      const q = filters.search.value.trim().toLowerCase();
+      return automations.filter((a) => {
+        const matchesSearch = !q ||
+          [a.name, a.description, a.owner, a.function, a.team, a.impact, a.source, ...a.tools]
+            .join(" ")
+            .toLowerCase()
+            .includes(q);
+        const matchesFunction = !filters.function.value || a.function === filters.function.value;
+        const matchesTool = !filters.tool.value || a.tools.includes(filters.tool.value);
+        const matchesComplexity = !filters.complexity.value || a.complexity === filters.complexity.value;
+        const matchesTeam = !filters.team.value || a.team === filters.team.value;
+        return matchesSearch && matchesFunction && matchesTool && matchesComplexity && matchesTeam;
+      });
+    }
+
+    function cardTemplate(a) {
+      const tools = a.tools.map((t) => `<span class="tool-chip">${t}</span>`).join("");
+      return `
+        <article class="card">
+          <div class="card-top">
+            <span class="tag">${a.function}</span>
+            <span class="status ${normalizeStatusClass(a.status)}">${a.status}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="name">${a.name}</h3>
+            <p class="desc">${a.description}</p>
+            <div class="row">${tools}</div>
+            <div class="row"><strong>Impact:</strong> ${a.impact}</div>
+            <div class="row"><strong>Complexity:</strong> ${a.complexity}</div>
+            <div class="row"><strong>Team/Pillar:</strong> ${a.team}</div>
+          </div>
+          <div class="card-footer">
+            <span class="owner">Owner: ${a.owner}</span>
+            <button class="button button-primary" data-id="${a.id}">View Details</button>
+          </div>
+        </article>`;
+    }
+
+    function openPanel(item) {
+      panelTitle.textContent = item.name;
+      panelTags.innerHTML = `
+        <span class="tag">${item.function}</span>
+        <span class="tool-chip">${item.complexity}</span>
+        <span class="tool-chip">${item.team}</span>
+        <span class="status ${normalizeStatusClass(item.status)}">${item.status}</span>
+      `;
+
+      const bullets = item.does.map((x) => `<li>${x}</li>`).join("");
+      const steps = item.reuseSteps.map((x) => `<li>${x}</li>`).join("");
+      const inputs = item.inputs.map((x) => `<li>${x}</li>`).join("");
+
+      panelBody.innerHTML = `
+        <section class="detail-block"><h3>Problem it solves</h3><p>${item.problem}</p></section>
+        <section class="detail-block"><h3>What it does</h3><ul>${bullets}</ul></section>
+        <section class="detail-block"><h3>When to use</h3><p>${item.whenToUse}</p></section>
+        <section class="detail-block"><h3>How it works</h3><p>${item.flow}</p></section>
+        <section class="detail-block"><h3>Steps to reuse</h3><ul>${steps}</ul></section>
+        <section class="detail-block"><h3>Inputs required to customize</h3><ul>${inputs}</ul></section>
+        <section class="detail-block"><h3>Sample output</h3><p>${item.sampleOutput}</p></section>
+        <section class="detail-block"><h3>Impact</h3><p>${item.impact}</p></section>
+        <section class="detail-block"><h3>Dependencies / limitations</h3><p>${item.dependencies}</p></section>
+        <section class="detail-block"><h3>Version and last updated</h3><p>${item.version} | ${item.lastUpdated}</p></section>
+        <section class="detail-block"><h3>Source</h3><p>${item.source}</p></section>
+      `;
+
+      panel.classList.add("open");
+      panel.setAttribute("aria-hidden", "false");
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDetailPanel() {
+      panel.classList.remove("open");
+      panel.setAttribute("aria-hidden", "true");
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    function render() {
+      const data = getFilteredData();
+      resultStats.textContent = `${data.length} automation cards shown | ${automations.length} total in library`;
+      grid.innerHTML = data.map(cardTemplate).join("");
+      emptyState.style.display = data.length ? "none" : "block";
+
+      grid.querySelectorAll("button[data-id]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const item = automations.find((a) => a.id === btn.dataset.id);
+          if (item) openPanel(item);
+        });
+      });
+    }
+
+    Object.values(filters).forEach((control) => {
+      control.addEventListener("input", render);
+      control.addEventListener("change", render);
+    });
+
+    closePanel.addEventListener("click", closeDetailPanel);
+    overlay.addEventListener("click", closeDetailPanel);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeDetailPanel();
+    });
+
+    fillFilterOptions();
+    render();
+  </script>
+</body>
+</html>
