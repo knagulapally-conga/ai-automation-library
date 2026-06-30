@@ -163,6 +163,17 @@
       line-height: 1.3;
     }
 
+    .name a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .name a:hover {
+      border-bottom-color: var(--accent);
+    }
+
     .desc {
       margin: 0;
       color: var(--text-1);
@@ -397,6 +408,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/cods-sprint-agent + GitHub: knagulapally-conga/cods-sprint-agent",
+        link: "https://github.com/knagulapally-conga/cods-sprint-agent",
         problem: "Sprint risk signals are spread across multiple Jira views and hard to act on quickly.",
         does: [
           "Fetches sprint history and current sprint signals.",
@@ -430,6 +442,7 @@
         owner: "Kranthi",
         status: "Needs Setup",
         source: "C:/repos/osm-dashboard/weekly_sla assets",
+        link: "file:///C:/repos/osm-dashboard/",
         problem: "Breaches are often identified late, causing avoidable escalation and customer impact.",
         does: [
           "Monitors issue age/SLA windows from Jira.",
@@ -463,6 +476,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/conga-master-dashboard/out + MAILER_NEWSLETTER_HTML_EXPORT",
+        link: "file:///C:/repos/conga-master-dashboard/",
         problem: "Weekly reporting is repetitive and inconsistent across teams.",
         does: [
           "Pulls Jira metrics for selected scope.",
@@ -496,6 +510,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/Automated Sprint Spillover Analysis Report + GitHub: knagulapally-conga/Automated-Sprint-Spillover-Analysis",
+        link: "https://github.com/knagulapally-conga/Automated-Sprint-Spillover-Analysis",
         problem: "Spillover decisions were made without a single source of sprint truth.",
         does: [
           "Calculates issue-level spillover metrics.",
@@ -529,6 +544,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/cods-maturity-dashboard + GitHub: knagulapally-conga/cods-maturity-dashboard",
+        link: "https://github.com/knagulapally-conga/cods-maturity-dashboard",
         problem: "Ops leadership dashboards required repeated manual refresh, publish, and broadcast steps.",
         does: [
           "Fetches live Jira data for key queues.",
@@ -562,6 +578,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/cods-sprint-pulse",
+        link: "file:///C:/repos/cods-sprint-pulse/",
         problem: "Sprint risk signals across teams were fragmented and delayed.",
         does: [
           "Fetches sprints and commits from multiple CODS boards.",
@@ -595,6 +612,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/osm-dashboard",
+        link: "file:///C:/repos/osm-dashboard/",
         problem: "Monthly executive dashboard preparation was manual and difficult to reproduce.",
         does: [
           "Fetches OSM datasets and chart inputs.",
@@ -628,6 +646,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/hosting_impact + GitHub: knagulapally-conga/hosting_impact",
+        link: "https://github.com/knagulapally-conga/hosting_impact",
         problem: "Epic-level cost impact estimation was inconsistent and often delayed.",
         does: [
           "Extracts signals from epic requirements.",
@@ -661,6 +680,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/releases-org-tracker",
+        link: "file:///C:/repos/releases-org-tracker/",
         problem: "Release status was tracked project-by-project without org-level alignment.",
         does: [
           "Fetches release-commit issue data across projects.",
@@ -694,6 +714,7 @@
         owner: "Kranthi",
         status: "Needs Setup",
         source: "C:/repos/conga-master-dashboard",
+        link: "file:///C:/repos/conga-master-dashboard/",
         problem: "Leadership needed one pane of glass across change, DORA, and weekly health streams.",
         does: [
           "Builds shared state from multiple feeders.",
@@ -727,6 +748,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/Resource-Optimization",
+        link: "file:///C:/repos/Resource-Optimization/",
         problem: "Capacity and workload decisions were often made from stale snapshots.",
         does: [
           "Pulls current Jira workload inputs.",
@@ -758,6 +780,7 @@
         owner: "Kranthi",
         status: "Experimental",
         source: "C:/repos/MAILER_NEWSLETTER_HTML_EXPORT",
+        link: "file:///C:/repos/MAILER_NEWSLETTER_HTML_EXPORT/",
         problem: "Cross-team communications required repeated copy/paste and formatting fixes.",
         does: [
           "Collects generated report artifacts.",
@@ -836,6 +859,7 @@
 
     function cardTemplate(a) {
       const tools = a.tools.map((t) => `<span class="tool-chip">${t}</span>`).join("");
+      const safeLink = a.link || "#";
       return `
         <article class="card">
           <div class="card-top">
@@ -843,7 +867,7 @@
             <span class="status ${normalizeStatusClass(a.status)}">${a.status}</span>
           </div>
           <div class="card-body">
-            <h3 class="name">${a.name}</h3>
+            <h3 class="name"><a href="${safeLink}" target="_blank" rel="noopener noreferrer">${a.name}</a></h3>
             <p class="desc">${a.description}</p>
             <div class="row">${tools}</div>
             <div class="row"><strong>Impact:</strong> ${a.impact}</div>
