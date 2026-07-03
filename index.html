@@ -550,7 +550,8 @@
           "Fetches live Jira data for key queues.",
           "Computes KPIs, trends, and table views.",
           "Embeds JSON into dashboard HTML.",
-          "Publishes to SharePoint and dispatches email."
+          "Publishes to SharePoint and dispatches email.",
+          "Falls back to refresh without email when webhook URL is not configured."
         ],
         whenToUse: "Use for daily leadership refresh or on-demand updates.",
         flow: "Trigger: run_refresh.ps1 -> Logic: refresh_ops_dashboard.py -> Action: publish + email",
@@ -562,7 +563,7 @@
         ],
         inputs: ["Jira URL/token", "JQL definitions", "Publish path", "Distribution list"],
         sampleOutput: "Dashboard updated: CODS P1=5, CODS P2=42, OSM=85, Total=132.",
-        dependencies: "Depends on Jira availability, SharePoint publish access, and GitHub Actions write token/permissions for auto-push.",
+        dependencies: "Depends on Jira availability, SharePoint publish access, and GitHub Actions write token/permissions for auto-push. Email dispatch needs POWER_AUTOMATE_URL.",
         version: "v2.x",
         lastUpdated: "2026-07-03"
       },
