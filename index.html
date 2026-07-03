@@ -408,7 +408,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/cods-sprint-agent + GitHub: knagulapally-conga/cods-sprint-agent",
-        link: "https://github.com/knagulapally-conga/cods-sprint-agent",
+        link: "file:///C:/repos/cods-sprint-agent/governance/governance_dashboard.html",
         problem: "Sprint risk signals are spread across multiple Jira views and hard to act on quickly.",
         does: [
           "Fetches sprint history and current sprint signals.",
@@ -442,7 +442,7 @@
         owner: "Kranthi",
         status: "Needs Setup",
         source: "C:/repos/osm-dashboard/weekly_sla assets",
-        link: "https://github.com/knagulapally-conga/osm-executive-dashboard",
+        link: "file:///C:/repos/osm-dashboard/osm_dashboard_latest.html",
         problem: "Breaches are often identified late, causing avoidable escalation and customer impact.",
         does: [
           "Monitors issue age/SLA windows from Jira.",
@@ -476,7 +476,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/conga-master-dashboard/out + MAILER_NEWSLETTER_HTML_EXPORT",
-        link: "https://github.com/search?q=knagulapally-conga%2Fconga-master-dashboard&type=repositories",
+        link: "file:///C:/repos/conga-master-dashboard/out/weekly_cxo_report_latest.html",
         problem: "Weekly reporting is repetitive and inconsistent across teams.",
         does: [
           "Pulls Jira metrics for selected scope.",
@@ -510,7 +510,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/Automated Sprint Spillover Analysis Report + GitHub: knagulapally-conga/Automated-Sprint-Spillover-Analysis",
-        link: "https://github.com/knagulapally-conga/Automated-Sprint-Spillover-Analysis",
+        link: "file:///C:/repos/cods-sprint-pulse/out/cods_sprint_pulse_latest.html",
         problem: "Spillover decisions were made without a single source of sprint truth.",
         does: [
           "Calculates issue-level spillover metrics.",
@@ -544,7 +544,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/cods-maturity-dashboard + GitHub: knagulapally-conga/cods-maturity-dashboard",
-        link: "https://github.com/knagulapally-conga/cods-maturity-dashboard",
+        link: "file:///C:/repos/cods-maturity-dashboard/Ops_Maturity_Dashboard_Shareable.html",
         problem: "Ops leadership dashboards required repeated manual refresh, publish, and broadcast steps.",
         does: [
           "Fetches live Jira data for key queues.",
@@ -562,9 +562,9 @@
         ],
         inputs: ["Jira URL/token", "JQL definitions", "Publish path", "Distribution list"],
         sampleOutput: "Dashboard updated: CODS P1=5, CODS P2=42, OSM=85, Total=132.",
-        dependencies: "Depends on Jira availability and SharePoint publish access.",
+        dependencies: "Depends on Jira availability, SharePoint publish access, and GitHub Actions write token/permissions for auto-push.",
         version: "v2.x",
-        lastUpdated: "2026-06-30"
+        lastUpdated: "2026-07-03"
       },
       {
         id: "cods-sprint-pulse",
@@ -578,7 +578,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/cods-sprint-pulse",
-        link: "https://github.com/search?q=knagulapally-conga%2Fcods-sprint-pulse&type=repositories",
+        link: "file:///C:/repos/cods-sprint-pulse/out/cods_sprint_pulse_latest.html",
         problem: "Sprint risk signals across teams were fragmented and delayed.",
         does: [
           "Fetches sprints and commits from multiple CODS boards.",
@@ -612,7 +612,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/osm-dashboard",
-        link: "https://github.com/knagulapally-conga/osm-executive-dashboard",
+        link: "file:///C:/repos/osm-dashboard/osm_dashboard_latest.html",
         problem: "Monthly executive dashboard preparation was manual and difficult to reproduce.",
         does: [
           "Fetches OSM datasets and chart inputs.",
@@ -646,7 +646,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/hosting_impact + GitHub: knagulapally-conga/hosting_impact",
-        link: "https://github.com/knagulapally-conga/hosting_impact",
+        link: "file:///C:/repos/hosting_impact/out/hosting_impact_project_review.html",
         problem: "Epic-level cost impact estimation was inconsistent and often delayed.",
         does: [
           "Extracts signals from epic requirements.",
@@ -680,7 +680,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/releases-org-tracker",
-        link: "https://github.com/search?q=knagulapally-conga%2Freleases-org-tracker&type=repositories",
+        link: "file:///C:/repos/releases-org-tracker/out/org_dashboard_latest.html",
         problem: "Release status was tracked project-by-project without org-level alignment.",
         does: [
           "Fetches release-commit issue data across projects.",
@@ -714,7 +714,7 @@
         owner: "Kranthi",
         status: "Needs Setup",
         source: "C:/repos/conga-master-dashboard",
-        link: "https://github.com/search?q=knagulapally-conga%2Fconga-master-dashboard&type=repositories",
+        link: "file:///C:/repos/conga-master-dashboard/out/master_dashboard_latest.html",
         problem: "Leadership needed one pane of glass across change, DORA, and weekly health streams.",
         does: [
           "Builds shared state from multiple feeders.",
@@ -748,7 +748,7 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/Resource-Optimization",
-        link: "https://github.com/search?q=knagulapally-conga%2FResource-Optimization&type=repositories",
+        link: "file:///C:/repos/Resource-Optimization/out/workload_assessment_latest.html",
         problem: "Capacity and workload decisions were often made from stale snapshots.",
         does: [
           "Pulls current Jira workload inputs.",
@@ -780,7 +780,7 @@
         owner: "Kranthi",
         status: "Experimental",
         source: "C:/repos/MAILER_NEWSLETTER_HTML_EXPORT",
-        link: "https://github.com/search?q=knagulapally-conga%2FMAILER_NEWSLETTER_HTML_EXPORT&type=repositories",
+        link: "file:///C:/repos/conga-master-dashboard/out/weekly_cxo_report_email.html",
         problem: "Cross-team communications required repeated copy/paste and formatting fixes.",
         does: [
           "Collects generated report artifacts.",
