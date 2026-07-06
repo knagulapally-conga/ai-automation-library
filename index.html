@@ -955,6 +955,7 @@
           "Renders relation-first master and audience-specific dashboard variants.",
           "Publishes explicit child-page map from cockpit.",
           "Shows simple 4-step refresh sequence for operators.",
+          "Maintains git-first repo hygiene with main branch and ignore policy.",
           "Bundles shareable outputs.",
           "Supports hourly refresh installation."
         ],
@@ -969,8 +970,8 @@
         ],
         inputs: ["Source output paths", "KPI contracts", "Audience presets", "Child page links"],
         sampleOutput: "Master dashboard refreshed with clear relation map plus change, DORA, and weekly executive sections.",
-        dependencies: "Dependent feeder schemas must remain stable.",
-        version: "v1.0",
+        dependencies: "Dependent feeder schemas must remain stable; repository uses main branch with Python cache/log ignore rules.",
+        version: "v1.1",
         lastUpdated: "2026-07-06"
       },
       {
