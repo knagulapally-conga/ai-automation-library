@@ -550,8 +550,10 @@
           "Fetches live Jira data for key queues.",
           "Computes KPIs, trends, and table views.",
           "Embeds JSON into dashboard HTML.",
+          "Shows Portfolio Totals as the first KPI group for birds-eye leadership view.",
+          "Adds CODS/OSM visual split in matrix using a vertical divider and shaded transition.",
           "Validates AI summary against refreshed KPI totals on every refresh.",
-          "Tracks additional OSM burndown series for P0/P1 critical and P2 aged (>7d).",
+          "Tracks additional OSM burndown series for P0/P1 critical and P2 aged (>7d) using live issue age.",
           "Publishes to SharePoint and dispatches email.",
           "Falls back to refresh without email when webhook URL is not configured.",
           "Supports stable localhost serving for interactive Refresh button workflows.",
@@ -566,9 +568,9 @@
           "Open local dashboard for parity check."
         ],
         inputs: ["Jira URL/token", "JQL definitions", "Publish path", "Distribution list"],
-        sampleOutput: "Dashboard updated: CODS P0/P1=6, CODS P2=35, OSM=89, OSM P0/P1=6, OSM P2 Aged>7d=0, Total=130.",
+        sampleOutput: "Dashboard updated: CODS P0/P1=6, CODS P2=35, OSM=90, OSM P0/P1=6, OSM P2 Aged>7d=28, Total=131.",
         dependencies: "Depends on Jira availability, SharePoint publish access, and GitHub Actions write token/permissions for auto-push. Email dispatch needs POWER_AUTOMATE_URL.",
-        version: "v2.3",
+        version: "v2.4",
         lastUpdated: "2026-07-06"
       },
       {
