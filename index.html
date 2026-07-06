@@ -535,7 +535,7 @@
       {
         id: "cods-ops-maturity-auto-refresh",
         name: "CODS Ops Maturity Auto-Refresh",
-        description: "Refreshes CODS+OSM defect dashboard, publishes output, and triggers email.",
+        description: "Refreshes CODS+OSM defect dashboard with validated AI summary and expanded burndown tracks.",
         function: "Reporting",
         tools: ["Jira", "PowerShell", "Python", "Power Automate"],
         complexity: "Advanced",
@@ -550,6 +550,8 @@
           "Fetches live Jira data for key queues.",
           "Computes KPIs, trends, and table views.",
           "Embeds JSON into dashboard HTML.",
+          "Validates AI summary against refreshed KPI totals on every refresh.",
+          "Tracks additional OSM burndown series for P0/P1 critical and P2 aged (>7d).",
           "Publishes to SharePoint and dispatches email.",
           "Falls back to refresh without email when webhook URL is not configured.",
           "Supports stable localhost serving for interactive Refresh button workflows.",
@@ -564,9 +566,9 @@
           "Open local dashboard for parity check."
         ],
         inputs: ["Jira URL/token", "JQL definitions", "Publish path", "Distribution list"],
-        sampleOutput: "Dashboard updated: CODS P1=5, CODS P2=42, OSM=85, Total=132.",
+        sampleOutput: "Dashboard updated: CODS P0/P1=6, CODS P2=35, OSM=89, OSM P0/P1=6, OSM P2 Aged>7d=0, Total=130.",
         dependencies: "Depends on Jira availability, SharePoint publish access, and GitHub Actions write token/permissions for auto-push. Email dispatch needs POWER_AUTOMATE_URL.",
-        version: "v2.2",
+        version: "v2.3",
         lastUpdated: "2026-07-06"
       },
       {
