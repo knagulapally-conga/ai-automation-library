@@ -412,6 +412,31 @@
       flex-wrap: wrap;
     }
 
+    .shortlist-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0 12px;
+      color: #244f5a;
+      font-size: 0.88rem;
+    }
+
+    .shortlist-controls input {
+      width: 15px;
+      height: 15px;
+      accent-color: #157f76;
+    }
+
+    .shortlist-empty {
+      border: 1px dashed #a9c8cc;
+      background: #f7fcfc;
+      color: #2b5663;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+    }
+
     .button-secondary {
       background: #ecf6f5;
       color: #0f5f58;
@@ -546,6 +571,11 @@
         <span class="meta-pill" id="shortlistCount"></span>
       </div>
       <p id="libraryMsg" class="library-msg"></p>
+
+      <label class="shortlist-controls">
+        <input id="showAddedToggle" type="checkbox" />
+        Show already added cards in shortlist
+      </label>
 
       <div id="shortlistGrid" class="shortlist-grid"></div>
 
@@ -1436,9 +1466,23 @@
     function renderShortlist() {
       const shortlistGrid = document.getElementById("shortlistGrid");
       const shortlistCount = document.getElementById("shortlistCount");
+      const showAdded = document.getElementById("showAddedToggle")?.checked;
       const remaining = shortlistCandidates.filter((c) => !automationExistsById(c.suggestedId)).length;
       shortlistCount.textContent = remaining + " pending | " + shortlistCandidates.length + " total candidates";
-      shortlistGrid.innerHTML = shortlistCandidates.map(candidateCardTemplate).join("");
+
+      const visibleCandidates = showAdded
+        ? shortlistCandidates
+        : shortlistCandidates.filter((c) => !automationExistsById(c.suggestedId));
+
+      if (!visibleCandidates.length) {
+        shortlistGrid.innerHTML = '<div class="shortlist-empty">All shortlist items are already added. Enable "Show already added cards in shortlist" to review them.</div>';
+        return;
+      }
+
+      shortlistGrid.innerHTML = visibleCandidates.map((c) => {
+        const idx = shortlistCandidates.findIndex((x) => x.suggestedId === c.suggestedId);
+        return candidateCardTemplate(c, idx);
+      }).join("");
       shortlistGrid.querySelectorAll("button[data-candidate-index]").forEach((btn) => {
         btn.addEventListener("click", () => {
           const c = shortlistCandidates[Number(btn.dataset.candidateIndex)];
@@ -1459,6 +1503,7 @@
     });
 
     document.getElementById("buildDraftBtn").addEventListener("click", buildDraftJson);
+    document.getElementById("showAddedToggle").addEventListener("change", renderShortlist);
     document.getElementById("copyDraftBtn").addEventListener("click", async () => {
       const output = document.getElementById("draftOutput");
       if (!output.value.trim()) buildDraftJson();
