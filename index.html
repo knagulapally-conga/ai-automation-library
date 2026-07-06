@@ -340,15 +340,163 @@
       display: none;
     }
 
+    .shortlist-wrap {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .shortlist-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .shortlist-head h2 {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.22rem;
+    }
+
+    .shortlist-note {
+      margin: 6px 0 0;
+      color: var(--text-1);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .shortlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .candidate-card {
+      border: 1px solid #d7e4e5;
+      border-radius: 12px;
+      background: #fbfefe;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .candidate-card h3 {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .candidate-path {
+      margin: 0;
+      color: #31515c;
+      font-size: 0.8rem;
+      word-break: break-all;
+    }
+
+    .candidate-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .candidate-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .button-secondary {
+      background: #ecf6f5;
+      color: #0f5f58;
+      border: 1px solid #cbe6e3;
+    }
+
+    .draft-wrap {
+      border-top: 1px solid #d8e7e8;
+      padding-top: 14px;
+    }
+
+    .draft-title {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+      color: #1f4652;
+    }
+
+    .draft-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .draft-grid .control {
+      min-height: 38px;
+      font-size: 0.88rem;
+      padding: 8px 10px;
+    }
+
+    .draft-grid .span-2 {
+      grid-column: span 2;
+    }
+
+    .draft-grid .span-3 {
+      grid-column: span 3;
+    }
+
+    .draft-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .draft-output {
+      width: 100%;
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      background: #f9fcfc;
+      color: #17343d;
+      resize: vertical;
+    }
+
     @media (max-width: 980px) {
       .controls {
         grid-template-columns: 1fr 1fr;
+      }
+
+      .draft-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .draft-grid .span-3 {
+        grid-column: span 2;
       }
     }
 
     @media (max-width: 640px) {
       .controls {
         grid-template-columns: 1fr;
+      }
+
+      .draft-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .draft-grid .span-2,
+      .draft-grid .span-3 {
+        grid-column: span 1;
       }
 
       .title-wrap {
@@ -381,6 +529,42 @@
 
     <section id="grid" class="grid"></section>
     <div id="emptyState" class="empty">No automations match the current filters. Try clearing one or more filters.</div>
+
+    <section class="shortlist-wrap">
+      <div class="shortlist-head">
+        <div>
+          <h2>Add-to-Library Shortlist</h2>
+          <p class="shortlist-note">Current/live candidate pages found under C:\repos that are not currently represented as primary links in this library. Backups, previews, and timestamped snapshots are intentionally excluded.</p>
+        </div>
+        <span class="meta-pill" id="shortlistCount"></span>
+      </div>
+
+      <div id="shortlistGrid" class="shortlist-grid"></div>
+
+      <div class="draft-wrap">
+        <h3 class="draft-title">Card Draft Generator (you can edit and add yourself)</h3>
+        <div class="draft-grid">
+          <input id="draftId" class="control" placeholder="id (kebab-case)" />
+          <input id="draftName" class="control span-2" placeholder="name" />
+          <input id="draftFunction" class="control" placeholder="function (Reporting, DevOps...)" />
+          <input id="draftComplexity" class="control" placeholder="complexity (Basic/Medium/Advanced)" />
+          <input id="draftTeam" class="control" placeholder="team/pillar" />
+          <input id="draftOwner" class="control" placeholder="owner" />
+          <input id="draftStatus" class="control" placeholder="status" />
+          <input id="draftTools" class="control" placeholder="tools comma-separated" />
+          <input id="draftLink" class="control span-3" placeholder="file:///C:/repos/.../page.html" />
+          <input id="draftSource" class="control span-3" placeholder="source path + optional GitHub" />
+          <input id="draftDescription" class="control span-3" placeholder="one-line description" />
+          <input id="draftImpact" class="control span-3" placeholder="impact statement" />
+          <textarea id="draftProblem" class="control span-3" placeholder="problem it solves"></textarea>
+        </div>
+        <div class="draft-actions">
+          <button id="buildDraftBtn" class="button button-secondary" type="button">Build Draft JSON</button>
+          <button id="copyDraftBtn" class="button button-primary" type="button">Copy Draft JSON</button>
+        </div>
+        <textarea id="draftOutput" class="draft-output" spellcheck="false" placeholder="Generated card JSON appears here"></textarea>
+      </div>
+    </section>
   </div>
 
   <div id="overlay" class="overlay" aria-hidden="true"></div>
@@ -833,10 +1017,124 @@
     const panelTags = document.getElementById("panelTags");
     const panelBody = document.getElementById("panelBody");
 
+    const shortlistCandidates = [
+      {
+        path: "C:/repos/cods-commits/out/exec_dashboard_latest.html",
+        suggestedId: "cods-commits-exec-dashboard",
+        suggestedName: "CODS Commits Executive Dashboard",
+        function: "Reporting",
+        complexity: "Medium",
+        team: "CODS",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        tools: ["Jira", "Python", "PowerShell"],
+        note: "Latest dashboard output"
+      },
+      {
+        path: "C:/repos/security-debt-tracker/out/security_debt_dashboard.html",
+        suggestedId: "security-debt-tracker-dashboard",
+        suggestedName: "Security Debt Tracker Dashboard",
+        function: "Reporting",
+        complexity: "Advanced",
+        team: "CODS / OSM",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        tools: ["Jira", "Python", "PowerShell"],
+        note: "Primary security debt view"
+      },
+      {
+        path: "C:/repos/conga-master-dashboard/out/change_management_latest.html",
+        suggestedId: "change-management-dashboard",
+        suggestedName: "Change Management Dashboard",
+        function: "Reporting",
+        complexity: "Advanced",
+        team: "Leadership",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        tools: ["Jira", "Python", "PowerShell", "HTML"],
+        note: "Latest change management view"
+      },
+      {
+        path: "C:/repos/conga-master-dashboard/out/dora_dashboard_latest.html",
+        suggestedId: "dora-dashboard-latest",
+        suggestedName: "DORA Metrics Dashboard",
+        function: "Reporting",
+        complexity: "Advanced",
+        team: "Leadership",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        tools: ["Jira", "Python", "PowerShell", "HTML"],
+        note: "Latest DORA metrics dashboard"
+      },
+      {
+        path: "C:/repos/conga-master-dashboard/out/wishlist_latest.html",
+        suggestedId: "wishlist-latest-dashboard",
+        suggestedName: "Wishlist Prioritization Dashboard",
+        function: "Reporting",
+        complexity: "Medium",
+        team: "Leadership",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        tools: ["Jira", "Python", "PowerShell"],
+        note: "Latest wishlist output"
+      },
+      {
+        path: "C:/repos/cods-sprint-pulse/out/cods_cxo_burndown_latest.html",
+        suggestedId: "cods-cxo-burndown-latest",
+        suggestedName: "CODS CXO Burndown Dashboard",
+        function: "Sprint Management",
+        complexity: "Medium",
+        team: "CODS",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        tools: ["Jira", "Python", "PowerShell", "HTML"],
+        note: "Latest CXO burndown view"
+      },
+      {
+        path: "C:/repos/Automated Sprint Spillover Analysis Report/output/spillover_report.html",
+        suggestedId: "spillover-analysis-report-live",
+        suggestedName: "Spillover Analysis Report (Current)",
+        function: "Sprint Management",
+        complexity: "Medium",
+        team: "CODS",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        tools: ["Python", "PowerShell", "HTML"],
+        note: "Current spillover report output"
+      },
+      {
+        path: "C:/repos/program_intelligence_brief_live.html",
+        suggestedId: "program-intelligence-brief-live",
+        suggestedName: "Program Intelligence Brief",
+        function: "Reporting",
+        complexity: "Medium",
+        team: "PMO",
+        owner: "Kranthi",
+        status: "Experimental",
+        tools: ["HTML", "Jira"],
+        note: "Live standalone brief"
+      }
+    ];
+
     function normalizeStatusClass(status) {
       if (status === "Ready to Use") return "ready";
       if (status === "Needs Setup") return "setup";
       return "experimental";
+    }
+
+    function todayIso() {
+      const d = new Date();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return d.getFullYear() + "-" + mm + "-" + dd;
+    }
+
+    function slugify(input) {
+      return String(input || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 80);
     }
 
     function fillFilterOptions() {
@@ -947,9 +1245,118 @@
       });
     }
 
+    function candidateCardTemplate(c, idx) {
+      const tools = (c.tools || []).map((t) => `<span class="tool-chip">${t}</span>`).join("");
+      const url = "file:///" + c.path.replace(/\\/g, "/");
+      return `
+        <article class="candidate-card">
+          <div class="candidate-meta">
+            <span class="tag">${c.function}</span>
+            <span class="status setup">Not in Library</span>
+          </div>
+          <h3>${c.suggestedName}</h3>
+          <p class="candidate-path">${c.path}</p>
+          <p class="candidate-path"><strong>Why shortlisted:</strong> ${c.note}</p>
+          <div class="row">${tools}</div>
+          <div class="candidate-actions">
+            <a class="button button-secondary" href="${url}" target="_blank" rel="noopener noreferrer">Open Page</a>
+            <button class="button button-primary" type="button" data-candidate-index="${idx}">Use In Draft</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function setDraftFromCandidate(c) {
+      document.getElementById("draftId").value = c.suggestedId || slugify(c.suggestedName);
+      document.getElementById("draftName").value = c.suggestedName || "";
+      document.getElementById("draftFunction").value = c.function || "Reporting";
+      document.getElementById("draftComplexity").value = c.complexity || "Medium";
+      document.getElementById("draftTeam").value = c.team || "Shared Services";
+      document.getElementById("draftOwner").value = c.owner || "Owner name";
+      document.getElementById("draftStatus").value = c.status || "Needs Setup";
+      document.getElementById("draftTools").value = (c.tools || []).join(", ");
+      document.getElementById("draftLink").value = "file:///" + c.path.replace(/\\/g, "/");
+      document.getElementById("draftSource").value = c.path.replace(/\\/g, "/").replace(/^C:\/i, "C:/").replace(/\/g, "/");
+      document.getElementById("draftDescription").value = c.note || "One-line description";
+      document.getElementById("draftImpact").value = "Add expected impact";
+      document.getElementById("draftProblem").value = "Add the problem this page/report solves.";
+      buildDraftJson();
+    }
+
+    function buildDraftJson() {
+      const id = (document.getElementById("draftId").value || "").trim();
+      const name = (document.getElementById("draftName").value || "").trim();
+      const fn = (document.getElementById("draftFunction").value || "Reporting").trim();
+      const complexity = (document.getElementById("draftComplexity").value || "Medium").trim();
+      const team = (document.getElementById("draftTeam").value || "Shared Services").trim();
+      const owner = (document.getElementById("draftOwner").value || "Owner name").trim();
+      const status = (document.getElementById("draftStatus").value || "Needs Setup").trim();
+      const tools = (document.getElementById("draftTools").value || "")
+        .split(",")
+        .map((x) => x.trim())
+        .filter(Boolean);
+      const link = (document.getElementById("draftLink").value || "").trim();
+      const source = (document.getElementById("draftSource").value || "").trim();
+      const description = (document.getElementById("draftDescription").value || "One-line description").trim();
+      const impact = (document.getElementById("draftImpact").value || "Impact statement").trim();
+      const problem = (document.getElementById("draftProblem").value || "Problem this page solves").trim();
+
+      const card = {
+        id: id || slugify(name || "new-automation"),
+        name: name || "New Automation",
+        description: description,
+        function: fn,
+        tools: tools,
+        complexity: complexity,
+        team: team,
+        impact: impact,
+        owner: owner,
+        status: status,
+        source: source,
+        link: link,
+        problem: problem,
+        does: ["Add bullet 1", "Add bullet 2"],
+        whenToUse: "Add when-to-use guidance",
+        flow: "Trigger -> Logic -> Action",
+        reuseSteps: ["Step 1", "Step 2", "Step 3"],
+        inputs: ["Input 1", "Input 2"],
+        sampleOutput: "Example output",
+        dependencies: "Known dependencies/limits",
+        version: "v1.0",
+        lastUpdated: todayIso()
+      };
+
+      document.getElementById("draftOutput").value = JSON.stringify(card, null, 2) + ",";
+    }
+
+    function renderShortlist() {
+      const shortlistGrid = document.getElementById("shortlistGrid");
+      const shortlistCount = document.getElementById("shortlistCount");
+      shortlistCount.textContent = shortlistCandidates.length + " candidate pages";
+      shortlistGrid.innerHTML = shortlistCandidates.map(candidateCardTemplate).join("");
+      shortlistGrid.querySelectorAll("button[data-candidate-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const c = shortlistCandidates[Number(btn.dataset.candidateIndex)];
+          if (c) setDraftFromCandidate(c);
+        });
+      });
+    }
+
     Object.values(filters).forEach((control) => {
       control.addEventListener("input", render);
       control.addEventListener("change", render);
+    });
+
+    document.getElementById("buildDraftBtn").addEventListener("click", buildDraftJson);
+    document.getElementById("copyDraftBtn").addEventListener("click", async () => {
+      const output = document.getElementById("draftOutput");
+      if (!output.value.trim()) buildDraftJson();
+      try {
+        await navigator.clipboard.writeText(output.value);
+      } catch (_) {
+        output.select();
+        document.execCommand("copy");
+      }
     });
 
     closePanel.addEventListener("click", closeDetailPanel);
@@ -960,6 +1367,8 @@
     });
 
     fillFilterOptions();
+    renderShortlist();
+    if (shortlistCandidates.length) setDraftFromCandidate(shortlistCandidates[0]);
     render();
   </script>
 </body>
