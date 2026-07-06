@@ -423,6 +423,13 @@
       padding-top: 14px;
     }
 
+    .library-msg {
+      margin: 8px 0 0;
+      font-size: 0.85rem;
+      color: #1d4f56;
+      min-height: 1.2em;
+    }
+
     .draft-title {
       margin: 0 0 8px;
       font-size: 0.98rem;
@@ -538,6 +545,7 @@
         </div>
         <span class="meta-pill" id="shortlistCount"></span>
       </div>
+      <p id="libraryMsg" class="library-msg"></p>
 
       <div id="shortlistGrid" class="shortlist-grid"></div>
 
@@ -1016,6 +1024,7 @@
     const panelTitle = document.getElementById("panelTitle");
     const panelTags = document.getElementById("panelTags");
     const panelBody = document.getElementById("panelBody");
+    const USER_ADDITIONS_KEY = "aiLibraryUserAdditionsV1";
 
     const shortlistCandidates = [
       {
@@ -1137,7 +1146,84 @@
         .slice(0, 80);
     }
 
+    function showMessage(text) {
+      const el = document.getElementById("libraryMsg");
+      if (!el) return;
+      el.textContent = text;
+    }
+
+    function readUserAdditions() {
+      try {
+        const raw = localStorage.getItem(USER_ADDITIONS_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function writeUserAdditions(items) {
+      try {
+        localStorage.setItem(USER_ADDITIONS_KEY, JSON.stringify(items));
+      } catch (_) {
+        showMessage("Added to this session, but local storage write failed in this browser profile.");
+      }
+    }
+
+    function automationExistsById(id) {
+      return automations.some((a) => String(a.id || "").toLowerCase() === String(id || "").toLowerCase());
+    }
+
+    function buildAutoCard(candidate) {
+      const sourcePath = candidate.path.replace(/\\/g, "/");
+      const link = "file:///" + sourcePath;
+      const today = todayIso();
+      return {
+        id: candidate.suggestedId || slugify(candidate.suggestedName || sourcePath),
+        name: candidate.suggestedName || "New Automation",
+        description: candidate.note || "Auto-generated entry from shortlist.",
+        function: candidate.function || "Reporting",
+        tools: Array.isArray(candidate.tools) ? candidate.tools : ["Jira", "Python"],
+        complexity: candidate.complexity || "Medium",
+        team: candidate.team || "Shared Services",
+        impact: "Auto-added from shortlist; refine impact statement if needed.",
+        owner: candidate.owner || "Kranthi",
+        status: candidate.status || "Needs Setup",
+        source: sourcePath,
+        link,
+        problem: "Auto-filled from shortlist candidate. Update with exact problem statement if needed.",
+        does: [
+          "Discovers and exposes a currently active page/report",
+          "Adds this automation entry into the central library instantly"
+        ],
+        whenToUse: "Use when this page should be visible as part of the standard automation catalog.",
+        flow: "Select shortlist item -> Add to Library -> Card appears in main catalog",
+        reuseSteps: [
+          "Validate the page opens and is current",
+          "Click Add to Library",
+          "Optionally fine-tune metadata in details"
+        ],
+        inputs: ["Candidate page path", "Suggested metadata"],
+        sampleOutput: "A new automation card appears in the main library grid",
+        dependencies: "Static HTML runtime; for permanent git history, sync index.html commit is still required.",
+        version: "v1.0",
+        lastUpdated: today
+      };
+    }
+
+    function hydrateWithUserAdditions() {
+      const saved = readUserAdditions();
+      saved.forEach((item) => {
+        if (item && item.id && !automationExistsById(item.id)) automations.unshift(item);
+      });
+    }
+
     function fillFilterOptions() {
+      [filters.function, filters.tool, filters.complexity, filters.team].forEach((sel) => {
+        while (sel.options.length > 1) sel.remove(1);
+      });
+
       const unique = {
         function: [...new Set(automations.map((a) => a.function))].sort(),
         tool: [...new Set(automations.flatMap((a) => a.tools))].sort(),
@@ -1248,11 +1334,12 @@
     function candidateCardTemplate(c, idx) {
       const tools = (c.tools || []).map((t) => `<span class="tool-chip">${t}</span>`).join("");
       const url = "file:///" + c.path.replace(/\\/g, "/");
+      const added = automationExistsById(c.suggestedId);
       return `
         <article class="candidate-card">
           <div class="candidate-meta">
             <span class="tag">${c.function}</span>
-            <span class="status setup">Not in Library</span>
+            <span class="status ${added ? "ready" : "setup"}">${added ? "Added" : "Not in Library"}</span>
           </div>
           <h3>${c.suggestedName}</h3>
           <p class="candidate-path">${c.path}</p>
@@ -1261,9 +1348,26 @@
           <div class="candidate-actions">
             <a class="button button-secondary" href="${url}" target="_blank" rel="noopener noreferrer">Open Page</a>
             <button class="button button-primary" type="button" data-candidate-index="${idx}">Use In Draft</button>
+            <button class="button button-primary" type="button" data-add-candidate-index="${idx}" ${added ? "disabled" : ""}>${added ? "Already Added" : "Add to Library"}</button>
           </div>
         </article>
       `;
+    }
+
+    function addCandidateToLibrary(candidate) {
+      const card = buildAutoCard(candidate);
+      if (automationExistsById(card.id)) {
+        showMessage(card.name + " is already in the library.");
+        return;
+      }
+      automations.unshift(card);
+      const saved = readUserAdditions();
+      saved.unshift(card);
+      writeUserAdditions(saved);
+      fillFilterOptions();
+      render();
+      renderShortlist();
+      showMessage("Added " + card.name + " to the library view with auto-filled metadata.");
     }
 
     function setDraftFromCandidate(c) {
@@ -1276,7 +1380,7 @@
       document.getElementById("draftStatus").value = c.status || "Needs Setup";
       document.getElementById("draftTools").value = (c.tools || []).join(", ");
       document.getElementById("draftLink").value = "file:///" + c.path.replace(/\\/g, "/");
-      document.getElementById("draftSource").value = c.path.replace(/\\/g, "/").replace(/^C:\/i, "C:/").replace(/\/g, "/");
+      document.getElementById("draftSource").value = c.path.replace(/\\/g, "/");
       document.getElementById("draftDescription").value = c.note || "One-line description";
       document.getElementById("draftImpact").value = "Add expected impact";
       document.getElementById("draftProblem").value = "Add the problem this page/report solves.";
@@ -1332,12 +1436,19 @@
     function renderShortlist() {
       const shortlistGrid = document.getElementById("shortlistGrid");
       const shortlistCount = document.getElementById("shortlistCount");
-      shortlistCount.textContent = shortlistCandidates.length + " candidate pages";
+      const remaining = shortlistCandidates.filter((c) => !automationExistsById(c.suggestedId)).length;
+      shortlistCount.textContent = remaining + " pending | " + shortlistCandidates.length + " total candidates";
       shortlistGrid.innerHTML = shortlistCandidates.map(candidateCardTemplate).join("");
       shortlistGrid.querySelectorAll("button[data-candidate-index]").forEach((btn) => {
         btn.addEventListener("click", () => {
           const c = shortlistCandidates[Number(btn.dataset.candidateIndex)];
           if (c) setDraftFromCandidate(c);
+        });
+      });
+      shortlistGrid.querySelectorAll("button[data-add-candidate-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const c = shortlistCandidates[Number(btn.dataset.addCandidateIndex)];
+          if (c) addCandidateToLibrary(c);
         });
       });
     }
@@ -1366,6 +1477,7 @@
       if (event.key === "Escape") closeDetailPanel();
     });
 
+    hydrateWithUserAdditions();
     fillFilterOptions();
     renderShortlist();
     if (shortlistCandidates.length) setDraftFromCandidate(shortlistCandidates[0]);
