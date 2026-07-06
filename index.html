@@ -1056,6 +1056,7 @@
           "Generates a unique run_id for each refresh cycle.",
           "Applies a lock file to prevent overlapping refresh runs.",
           "Validates conga_state.json contract and freshness before publish.",
+          "Normalizes older state snapshots with schema compatibility shim.",
           "Stages run artifacts under out/runs/<run_id> and updates current run pointer.",
           "Generates refresh_manifest.json with gate and page freshness metadata.",
           "Aborts publish path when upstream steps fail.",
@@ -1072,7 +1073,7 @@
         inputs: ["Jira credentials", "Repository snapshots", "conga_state.json"],
         sampleOutput: "[publish_atomic] PASS | [refresh_manifest] PASS | run_id=20260706_151500",
         dependencies: "Requires all upstream repos under C:/repos and valid Jira API credentials.",
-        version: "v2.1",
+        version: "v2.2",
         lastUpdated: "2026-07-06"
       }
     ];
