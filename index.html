@@ -555,6 +555,8 @@
           "Validates AI summary against refreshed KPI totals on every refresh.",
           "Tracks additional OSM burndown series for P0/P1 critical and P2 aged (>7d) using live issue age.",
           "Shows explicit sparse-history note when a burndown metric has only recent snapshots.",
+          "Displays explicit baseline date (Jun 17, 2026) in each burndown card subtitle.",
+          "Anchors a baseline actual point on Jun 17 when measured snapshots start later.",
           "Prevents burndown point clipping and improves dynamic y-axis scaling for visibility.",
           "Publishes to SharePoint and dispatches email.",
           "Falls back to refresh without email when webhook URL is not configured.",
@@ -572,7 +574,7 @@
         inputs: ["Jira URL/token", "JQL definitions", "Publish path", "Distribution list"],
         sampleOutput: "Dashboard updated: CODS P0/P1=6, CODS P2=35, OSM=91, OSM P0/P1=6, OSM P2 Aged>7d=28, Total=132.",
         dependencies: "Depends on Jira availability, SharePoint publish access, and GitHub Actions write token/permissions for auto-push. Email dispatch needs POWER_AUTOMATE_URL.",
-        version: "v2.5",
+        version: "v2.6",
         lastUpdated: "2026-07-06"
       },
       {
