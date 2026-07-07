@@ -957,10 +957,11 @@
           "Shows simple 4-step refresh sequence for operators.",
           "Maintains git-first repo hygiene with main branch and ignore policy.",
           "Bundles shareable outputs.",
-          "Supports hourly refresh installation."
+          "Supports hourly refresh installation.",
+          "Uses hidden task launchers for scheduled maintenance to avoid command-window popups."
         ],
         whenToUse: "Use when combining multiple reporting surfaces into one leadership view with clear dependency routing.",
-        flow: "Trigger: child refreshes -> Logic: validate + regenerate master -> Action: publish cockpit and drill-down links",
+        flow: "Trigger: child refreshes and idle maintenance schedule -> Logic: validate + regenerate master -> Action: publish cockpit and drill-down links",
         reuseSteps: [
           "Configure source feeders.",
           "Run child refresh scripts first.",
@@ -971,8 +972,8 @@
         inputs: ["Source output paths", "KPI contracts", "Audience presets", "Child page links"],
         sampleOutput: "Master dashboard refreshed with clear relation map plus change, DORA, and weekly executive sections.",
         dependencies: "Dependent feeder schemas must remain stable; repository uses main branch with Python cache/log ignore rules.",
-        version: "v1.1",
-        lastUpdated: "2026-07-06"
+        version: "v1.2",
+        lastUpdated: "2026-07-07"
       },
       {
         id: "resource-optimization-refresh",
