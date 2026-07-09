@@ -723,7 +723,7 @@
       {
         id: "sprint-spillover-truth-report",
         name: "Sprint Spillover Truth Report",
-        description: "Builds an executive spillover report with root-cause narrative and actions.",
+        description: "Builds an executive spillover report with Jira Functional Group mapping, named owners, and root-cause actions.",
         function: "Sprint Management",
         tools: ["Python", "PowerShell", "HTML"],
         complexity: "Medium",
@@ -732,27 +732,29 @@
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/repos/Automated Sprint Spillover Analysis Report + GitHub: knagulapally-conga/Automated-Sprint-Spillover-Analysis",
-        link: "file:///C:/repos/cods-sprint-pulse/out/cods_sprint_pulse_latest.html",
+        link: "file:///C:/repos/Automated%20Sprint%20Spillover%20Analysis%20Report/output/spillover_report.html",
         problem: "Spillover decisions were made without a single source of sprint truth.",
         does: [
           "Calculates issue-level spillover metrics.",
+          "Maps Functional Group directly from Jira \"Functional Group\" field.",
           "Generates HTML report with risk register.",
+          "Calls out named owners in go-forward plan from issue assignee.",
           "Exports supporting CSV evidence.",
           "Supports scripted mail dispatch."
         ],
         whenToUse: "Use after sprint close or before planning the next sprint.",
-        flow: "Trigger: run pipeline script -> Logic: compute spillover metrics -> Action: publish report + optional email",
+        flow: "Trigger: run pipeline script -> Logic: live Jira fetch + Functional Group normalization + spillover scoring -> Action: publish report + optional email",
         reuseSteps: [
           "Provide sprint and issue inputs (CSV or live fetch).",
-          "Run generate_report.ps1.",
+          "Run fetch_and_generate.py then generate_report.ps1.",
           "Validate risk findings.",
           "Share report with stakeholders."
         ],
         inputs: ["Sprint metadata", "Issue dataset", "Owner/team mapping"],
-        sampleOutput: "Spillover risk: 18% from unresolved dependencies, 11% from ownership delay.",
-        dependencies: "Requires consistent sprint field mapping.",
-        version: "v1.0",
-        lastUpdated: "2026-06-30"
+        sampleOutput: "70126 spillover: 19 issues, 42 SP, across 5 Functional Groups with named go-forward owners.",
+        dependencies: "Requires Jira API token, stable sprint mapping, and Functional Group field availability.",
+        version: "v1.1",
+        lastUpdated: "2026-07-09"
       },
       {
         id: "cods-ops-maturity-auto-refresh",
@@ -1079,6 +1081,40 @@
         dependencies: "Requires all upstream repos under C:/repos and valid Jira API credentials.",
         version: "v2.4",
         lastUpdated: "2026-07-07"
+      },
+      {
+        id: "cods-commits-daily-smoke-scheduler",
+        name: "CODS Commits Daily Smoke Scheduler",
+        description: "Runs cods-commits daily smoke checks using a hidden launcher to avoid command-window popup flashing.",
+        function: "Reporting",
+        tools: ["Task Scheduler", "PowerShell", "VBScript", "Python"],
+        complexity: "Basic",
+        team: "CODS",
+        impact: "Keeps scheduled smoke validation non-disruptive while preserving daily health checks",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/cods-commits + GitHub: knagulapally-conga/cods-commits",
+        link: "file:///C:/repos/cods-commits/tools/smoke_daily.ps1",
+        problem: "Scheduled smoke checks were launching a visible command window and distracting active work sessions.",
+        does: [
+          "Executes daily smoke tests for cods-commits refresh health.",
+          "Triggers via Task Scheduler on daily cadence.",
+          "Launches smoke script through hidden wscript wrapper.",
+          "Prevents visible PowerShell window flash while preserving task output and result codes."
+        ],
+        whenToUse: "Use when daily smoke validation must run automatically without interrupting users.",
+        flow: "Trigger: scheduled daily task -> Logic: hidden launcher invokes smoke_daily.ps1 -> Action: task result recorded without UI popup",
+        reuseSteps: [
+          "Keep tools/smoke_daily.ps1 up to date with smoke checks.",
+          "Use tools/smoke_daily_hidden.vbs as task action entrypoint.",
+          "Register task action as wscript.exe //B //NoLogo <hidden_vbs_path>.",
+          "Review last run status from Task Scheduler or Get-ScheduledTaskInfo."
+        ],
+        inputs: ["Jira credentials", "cods-commits repo state", "Scheduled task registration"],
+        sampleOutput: "Task runs daily with LastResult=0 and no visible console window.",
+        dependencies: "Requires Task Scheduler permissions and paths under C:/repos/cods-commits.",
+        version: "v1.0",
+        lastUpdated: "2026-07-09"
       }
     ];
 
