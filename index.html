@@ -738,7 +738,7 @@
           "Calculates issue-level spillover metrics.",
           "Maps Functional Group directly from Jira \"Functional Group\" field.",
           "Generates HTML report with risk register.",
-          "Uses true escalation-path ownership (L1/L2/L3) in go-forward plan.",
+          "Calls out named owners in go-forward plan from issue assignee.",
           "Exports supporting CSV evidence.",
           "Supports scripted mail dispatch."
         ],
@@ -750,10 +750,10 @@
           "Validate risk findings.",
           "Share report with stakeholders."
         ],
-        inputs: ["Sprint metadata", "Issue dataset", "Functional Group escalation matrix"],
-        sampleOutput: "70126 spillover: 19 issues, 42 SP, across 5 Functional Groups with P0/P1 escalation owners and L1/L2/L3 path.",
-        dependencies: "Requires Jira API token, stable sprint mapping, Functional Group field availability, and escalation_path.csv.",
-        version: "v1.2",
+        inputs: ["Sprint metadata", "Issue dataset", "Owner/team mapping"],
+        sampleOutput: "70126 spillover: 19 issues, 42 SP, across 5 Functional Groups with named go-forward owners.",
+        dependencies: "Requires Jira API token, stable sprint mapping, and Functional Group field availability.",
+        version: "v1.1",
         lastUpdated: "2026-07-09"
       },
       {
