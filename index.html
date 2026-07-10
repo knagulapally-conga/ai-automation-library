@@ -821,6 +821,7 @@
           "Computes velocity, workload, and start-of-sprint commit coverage metrics.",
           "Renders burndown and workload dashboards.",
           "Adds blocked/unassigned ticket drill lists by team and CloudOps overall commit completion %.",
+          "Groups equivalent sprint labels (e.g., 060126 and 60126) under one 60126 trend column.",
           "Supports pre-close operational check."
         ],
         whenToUse: "Use weekly during sprint execution and before sprint closure.",
@@ -834,7 +835,7 @@
         inputs: ["Board IDs", "Sprint window", "Story point mapping"],
         sampleOutput: "Active sprint: 216 tickets, commit coverage and completion aligned to start-of-sprint commit scope, with blocked/unassigned ticket links.",
         dependencies: "Stable board-level sprint issue endpoint and SP field mapping.",
-        version: "v1.1",
+        version: "v1.2",
         lastUpdated: "2026-07-10"
       },
       {
