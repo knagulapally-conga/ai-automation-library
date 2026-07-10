@@ -805,7 +805,7 @@
       {
         id: "cods-sprint-pulse",
         name: "CODS Sprint Pulse Dashboard Pipeline",
-        description: "Builds cross-team sprint risk, velocity, and burndown views from one data pipeline.",
+        description: "Builds cross-team sprint risk, velocity, commit coverage, and burndown views from one data pipeline.",
         function: "Sprint Management",
         tools: ["Jira", "Python", "PowerShell"],
         complexity: "Advanced",
@@ -818,8 +818,9 @@
         problem: "Sprint risk signals across teams were fragmented and delayed.",
         does: [
           "Fetches sprints and commits from multiple CODS boards.",
-          "Computes velocity and workload metrics.",
+          "Computes velocity, workload, and start-of-sprint commit coverage metrics.",
           "Renders burndown and workload dashboards.",
+          "Adds blocked/unassigned ticket drill lists by team and CloudOps overall commit completion %.",
           "Supports pre-close operational check."
         ],
         whenToUse: "Use weekly during sprint execution and before sprint closure.",
@@ -831,10 +832,10 @@
           "Share risk snapshot with scrum leads."
         ],
         inputs: ["Board IDs", "Sprint window", "Story point mapping"],
-        sampleOutput: "Program trend: 2 teams at spillover risk this sprint; 1 team improving velocity.",
+        sampleOutput: "Active sprint: 216 tickets, commit coverage and completion aligned to start-of-sprint commit scope, with blocked/unassigned ticket links.",
         dependencies: "Stable board-level sprint issue endpoint and SP field mapping.",
-        version: "v1.x",
-        lastUpdated: "2026-06-30"
+        version: "v1.1",
+        lastUpdated: "2026-07-10"
       },
       {
         id: "osm-monthly-exec-dashboard",
