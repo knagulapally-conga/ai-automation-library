@@ -670,7 +670,8 @@
           "Monitors issue age/SLA windows from Jira.",
           "Identifies near-breach tickets by configured threshold.",
           "Builds alert payload grouped by pillar/team.",
-          "Routes notifications for early action."
+          "Routes notifications for early action.",
+          "Runs weekly scheduler through hidden launcher to avoid visible cmd window popups."
         ],
         whenToUse: "Use in support operations where SLA compliance is a weekly KPI.",
         flow: "Trigger: hourly/daily schedule -> Logic: SLA threshold check -> Action: proactive alert to team owners",
@@ -682,9 +683,9 @@
         ],
         inputs: ["JQL scope", "Threshold hours/days", "Notification channels"],
         sampleOutput: "Alert: 7 tickets entering breach window in next 24h (Platform: 3, CLM: 2, Revenue: 2).",
-        dependencies: "SLA fields and status mapping must be standardized.",
+        dependencies: "SLA fields and status mapping must be standardized; scheduled run uses hidden WScript launcher.",
         version: "pilot",
-        lastUpdated: "2026-06-30"
+        lastUpdated: "2026-07-13"
       },
       {
         id: "weekly-status-report-generator",
