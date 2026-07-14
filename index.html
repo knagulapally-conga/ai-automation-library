@@ -1237,6 +1237,43 @@
         status: "Experimental",
         tools: ["HTML", "Jira"],
         note: "Live standalone brief"
+      },
+      {
+        id: "ejap-enterprise-jira-analytics-platform",
+        name: "Enterprise Jira Analytics Platform (EJAP)",
+        description: "6-layer analytics pipeline that transforms Jira data into trusted, explainable, actionable intelligence with Power BI and HTML output.",
+        function: "Reporting",
+        tools: ["Python", "Jira", "Power BI", "PowerShell", "HTML", "YAML"],
+        complexity: "Advanced",
+        team: "CODS",
+        impact: "Eliminates manual Jira reporting; delivers verified KPIs with full lineage to Power BI and HTML in one command",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/ejap + GitHub: knagulapally-conga/ejap",
+        problem: "Jira data is raw and untrustworthy without validation, normalisation, and a single source of truth for KPI definitions.",
+        does: [
+          "Extraction: paginated Jira REST API with custom field auto-discovery and immutable snapshots.",
+          "Validation: schema, nulls, duplicates, date validity, required custom fields — halts on failure.",
+          "Transformation: business rule normalisation, status mapping, age calculation.",
+          "Analytics: 10 KPIs (completion rate, type breakdown, overdue, high priority) with full lineage and verified drill-through JQL.",
+          "Visualization: Conga-branded HTML report + Power BI-ready CSV (Phase 1) or Push Dataset API (Phase 2).",
+          "Distribution: file-based Phase 1; email/Teams Phase 2.",
+          "Observability: execution IDs, audit blocks, structured log files."
+        ],
+        whenToUse: "When you need a production-grade, enterprise-ready analytics pipeline for any Jira project — configure a new JQL query and run.",
+        flow: "JQL Config → Jira Extraction → Validation → Transformation → KPI Engine → HTML + Power BI CSV → Audit Block",
+        reuseSteps: [
+          "Copy .env.example to .env and set JIRA_BASE_URL, JIRA_EMAIL, JIRA_API_TOKEN.",
+          "Add a new query entry to config/settings.yaml with your JQL.",
+          "Run: .\\tools\\refresh.ps1 -OpenReport",
+          "Point Power BI Desktop to output/data/powerbi/tasks.csv via File connector.",
+          "For Phase 2 push API: set POWERBI_* env vars and enable phase2_push_api in settings.yaml."
+        ],
+        inputs: ["Jira JQL filter", "JIRA_BASE_URL + JIRA_EMAIL + JIRA_API_TOKEN env vars"],
+        sampleOutput: "HTML report with 10 KPI tiles, issue table, KPI lineage + tasks.csv and kpis.csv for Power BI",
+        dependencies: "Python 3.11+, requests, PyYAML. Phase 2: azure-identity. Power BI Gateway for scheduled cloud refresh (Phase 1).",
+        version: "v1.0",
+        lastUpdated: "2026-07-14"
       }
     ];
 
