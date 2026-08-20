@@ -724,7 +724,7 @@
       {
         id: "sprint-spillover-truth-report",
         name: "Sprint Spillover Truth Report",
-        description: "Builds an executive spillover report with Jira Functional Group mapping, named owners, and root-cause actions.",
+        description: "Builds an executive spillover report with Jira Functional Group, Ops Pillar, Pillar Lead mapping, and root-cause actions.",
         function: "Sprint Management",
         tools: ["Python", "PowerShell", "HTML"],
         complexity: "Medium",
@@ -739,7 +739,8 @@
           "Calculates issue-level spillover metrics.",
           "Maps Functional Group directly from Jira \"Functional Group\" field.",
           "Generates HTML report with risk register.",
-          "Calls out named owners in go-forward plan from issue assignee.",
+          "Adds Ops Pillar and Pillar Lead context across report views.",
+          "Provides a go-forward plan without the retired Owner role column.",
           "Exports supporting CSV evidence.",
           "Supports scripted mail dispatch."
         ],
@@ -752,10 +753,10 @@
           "Share report with stakeholders."
         ],
         inputs: ["Sprint metadata", "Issue dataset", "Owner/team mapping"],
-        sampleOutput: "70126 spillover: 19 issues, 42 SP, across 5 Functional Groups with named go-forward owners.",
+        sampleOutput: "80226 spillover: 21 issues, 43 SP, across 4 Functional Groups with Ops Pillar and Pillar Lead context.",
         dependencies: "Requires Jira API token, stable sprint mapping, and Functional Group field availability.",
-        version: "v1.1",
-        lastUpdated: "2026-07-09"
+        version: "v1.2",
+        lastUpdated: "2026-08-20"
       },
       {
         id: "cods-ops-maturity-auto-refresh",
