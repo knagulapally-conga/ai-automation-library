@@ -740,6 +740,7 @@
           "Maps Functional Group directly from Jira \"Functional Group\" field.",
           "Generates HTML report with risk register.",
           "Adds Ops Pillar and Pillar Lead context across report views.",
+          "Shows mapped Functional Groups with zero spillover as healthy zero rows.",
           "Provides a go-forward plan without the retired Owner role column.",
           "Generates a stakeholder newsletter in HTML and Outlook MSG formats.",
           "Exports supporting CSV evidence.",
@@ -756,7 +757,7 @@
         inputs: ["Sprint metadata", "Issue dataset", "Owner/team mapping", "Stakeholder audience"],
         sampleOutput: "80226 spillover: 21 issues, 43 SP, across 4 Functional Groups with Ops Pillar and Pillar Lead context.",
         dependencies: "Requires Jira API token, stable sprint mapping, and Functional Group field availability.",
-        version: "v1.2",
+        version: "v1.3",
         lastUpdated: "2026-08-20"
       },
       {
