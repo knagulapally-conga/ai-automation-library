@@ -741,6 +741,7 @@
           "Generates HTML report with risk register.",
           "Adds Ops Pillar and Pillar Lead context across report views.",
           "Provides a go-forward plan without the retired Owner role column.",
+          "Generates a stakeholder newsletter in HTML and Outlook MSG formats.",
           "Exports supporting CSV evidence.",
           "Supports scripted mail dispatch."
         ],
@@ -752,7 +753,7 @@
           "Validate risk findings.",
           "Share report with stakeholders."
         ],
-        inputs: ["Sprint metadata", "Issue dataset", "Owner/team mapping"],
+        inputs: ["Sprint metadata", "Issue dataset", "Owner/team mapping", "Stakeholder audience"],
         sampleOutput: "80226 spillover: 21 issues, 43 SP, across 4 Functional Groups with Ops Pillar and Pillar Lead context.",
         dependencies: "Requires Jira API token, stable sprint mapping, and Functional Group field availability.",
         version: "v1.2",
