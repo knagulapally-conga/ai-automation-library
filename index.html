@@ -1124,6 +1124,42 @@
         dependencies: "Requires Task Scheduler permissions and paths under C:/repos/cods-commits.",
         version: "v1.0",
         lastUpdated: "2026-07-09"
+      },
+      {
+        id: "pr-jira-mapping-report",
+        name: "PR to Jira Mapping Report",
+        description: "Maps open GitHub pull requests to explicit Jira keys or verified project ownership evidence.",
+        function: "DevOps",
+        tools: ["GitHub CLI", "Python", "HTML", "Jira"],
+        complexity: "Medium",
+        team: "Engineering",
+        impact: "Makes organization-wide PR ownership and Jira-linkage gaps visible in one searchable view",
+        owner: "Kranthi",
+        status: "Ready to Use",
+        source: "C:/repos/pr-jira-mapping-report (local)",
+        link: "file:///C:/repos/pr-jira-mapping-report/output/pr-jira-mapping.html",
+        problem: "Open PRs are spread across repositories and often lack a direct, trustworthy Jira project or issue relationship.",
+        does: [
+          "Fetches all open pull requests across the congaengr GitHub organization.",
+          "Extracts Jira keys from PR titles and descriptions.",
+          "Maps approved service ownership separately from specific Jira issue linkage.",
+          "Shows mapping type, confidence, evidence, age, author, repository, and service.",
+          "Provides search, filters, sorting, clickable summary counts, and a detail drawer.",
+          "Renders a self-contained responsive HTML report with extraction timestamp and source scope."
+        ],
+        whenToUse: "Use when reviewing open PR inventory, Jira traceability, stale work, or repository ownership gaps.",
+        flow: "Trigger: run report.py -> Logic: fetch GitHub snapshot + extract Jira keys + apply approved ownership rules -> Action: render searchable HTML",
+        reuseSteps: [
+          "Authenticate GitHub CLI with organization repository access.",
+          "Review and approve ownership-map.json rules.",
+          "Run python report.py from C:/repos/pr-jira-mapping-report.",
+          "Open output/pr-jira-mapping.html and investigate unmapped records."
+        ],
+        inputs: ["GitHub organization", "Open PR metadata", "Approved repository/service ownership map"],
+        sampleOutput: "466 open PRs: 30 explicit Jira-key mappings, 66 ownership mappings, and 370 unmapped records.",
+        dependencies: "Requires Python 3.10+ and authenticated GitHub CLI; current version does not validate every extracted issue against Jira or trace every deployment revision upstream.",
+        version: "v1.0",
+        lastUpdated: "2026-09-24"
       }
     ];
 
