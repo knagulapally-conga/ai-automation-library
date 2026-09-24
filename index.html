@@ -1128,7 +1128,7 @@
       {
         id: "pr-jira-mapping-report",
         name: "PR to Jira Mapping Report",
-        description: "Maps open GitHub pull requests to explicit Jira keys or verified project ownership evidence.",
+        description: "Maps open GitHub pull requests to explicit Jira keys, approved Pillar/* labels, or verified project ownership evidence.",
         function: "DevOps",
         tools: ["GitHub CLI", "Python", "HTML", "Jira"],
         complexity: "Medium",
@@ -1142,23 +1142,24 @@
         does: [
           "Fetches all open pull requests across the congaengr GitHub organization.",
           "Extracts Jira keys from PR titles and descriptions.",
-          "Maps approved service ownership separately from specific Jira issue linkage.",
+          "Applies approved evidence in order: Pillar label, repository ownership, then service prefix.",
+          "Keeps project ownership evidence separate from specific Jira issue linkage.",
           "Shows mapping type, confidence, evidence, age, author, repository, and service.",
-          "Provides search, filters, sorting, clickable summary counts, and a detail drawer.",
+          "Provides search, filters, sorting, clickable summary counts, a detail drawer, and persistent selection highlighting.",
           "Renders a self-contained responsive HTML report with extraction timestamp and source scope."
         ],
         whenToUse: "Use when reviewing open PR inventory, Jira traceability, stale work, or repository ownership gaps.",
-        flow: "Trigger: run report.py -> Logic: fetch GitHub snapshot + extract Jira keys + apply approved ownership rules -> Action: render searchable HTML",
+        flow: "Trigger: run report.py -> Logic: fetch GitHub snapshot + extract Jira keys + apply approved Pillar label, repository, and service-prefix rules -> Action: render searchable HTML with visible selection state",
         reuseSteps: [
           "Authenticate GitHub CLI with organization repository access.",
           "Review and approve ownership-map.json rules.",
           "Run python report.py from C:/repos/pr-jira-mapping-report.",
           "Open output/pr-jira-mapping.html and investigate unmapped records."
         ],
-        inputs: ["GitHub organization", "Open PR metadata", "Approved repository/service ownership map"],
-        sampleOutput: "466 open PRs: 30 explicit Jira-key mappings, 66 ownership mappings, and 370 unmapped records.",
+        inputs: ["GitHub organization", "Open PR metadata and labels", "Approved Pillar label/repository/service ownership map"],
+        sampleOutput: "464 open PRs: 30 explicit Jira-key mappings, 193 Pillar-label mappings, 5 ownership-only mappings, and 236 unmapped records.",
         dependencies: "Requires Python 3.10+ and authenticated GitHub CLI; current version does not validate every extracted issue against Jira or trace every deployment revision upstream.",
-        version: "v1.0",
+        version: "v1.1",
         lastUpdated: "2026-09-24"
       }
     ];
