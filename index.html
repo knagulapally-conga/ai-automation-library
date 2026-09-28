@@ -621,7 +621,7 @@
       {
         id: "sprint-health-monitoring-agent",
         name: "Sprint Health Monitoring & Portfolio Dashboard",
-        description: "Jira-backed active Sprint Health portfolio view with project-level completion, spillover, and delivery snapshots.",
+        description: "Jira-backed active Sprint Health portfolio view with a canonical Change Management-style project dashboard template.",
         function: "Sprint Management",
         tools: ["Jira", "Copilot", "Power Automate"],
         complexity: "Advanced",
@@ -635,7 +635,8 @@
         does: [
           "Fetches the active project-scoped sprint snapshot from Jira.",
           "Displays portfolio scope and expandable project dashboards.",
-          "Shows verified completion, committed points, completed points, spillover issues, Chart.js-responsive charts, zoom controls, data labels, live cursor tooltips, and Jira click-through drilldowns.",
+          "Shows verified completion, committed points, completed points, spillover issues, responsive Chart.js analytics, live tooltips, and Jira click-through drilldowns.",
+          "Preserves the existing dashboard while introducing a fresh EUF V2 canonical template for controlled migration.",
           "Uses confirmed project board mappings, including PLATFORM 851 and COREAPPS 3925.",
           "Discloses unavailable time-series metrics instead of fabricating values."
         ],
@@ -650,7 +651,7 @@
         inputs: ["Project board IDs", "Jira project keys", "Closed sprint snapshot", "Issue-level spillover data"],
         sampleOutput: "Portfolio view: 10 projects in scope; project dashboard: 98.4% completion, 582 committed SP, 581 completed SP, 2 spillover issues.",
         dependencies: "Requires Jira API access, confirmed board mappings, and a coherent project-scoped snapshot. COREAPPS remains unconfigured until its board is confirmed.",
-        version: "v2.1",
+        version: "v2.2",
         lastUpdated: "2026-09-28"
       },
       {
