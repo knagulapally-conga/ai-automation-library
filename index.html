@@ -620,37 +620,37 @@
     const automations = [
       {
         id: "sprint-health-monitoring-agent",
-        name: "Sprint Health Monitoring Agent",
-        description: "Tracks sprint progress and flags delivery risks before sprint close.",
+        name: "Sprint Health Monitoring & Portfolio Dashboard",
+        description: "Jira-backed Sprint Health portfolio view with project-level spillover, completion, and delivery snapshots.",
         function: "Sprint Management",
         tools: ["Jira", "Copilot", "Power Automate"],
         complexity: "Advanced",
-        team: "CODS",
-        impact: "Saves ~2 hours per sprint",
+        team: "PMO / Engineering",
+        impact: "Provides one consistent sprint-health view across nine configured projects",
         owner: "Kranthi",
         status: "Ready to Use",
-        source: "C:/repos/cods-sprint-agent + GitHub: knagulapally-conga/cods-sprint-agent",
-        link: "file:///C:/repos/cods-sprint-agent/governance/governance_dashboard.html",
-        problem: "Sprint risk signals are spread across multiple Jira views and hard to act on quickly.",
+        source: "C:/Users/knagulapally/PMOrepo/docs/pmo_cockpit_v2.html + GitHub Pages deployment",
+        link: "https://automatic-adventure-qwv8717.pages.github.io/pmo_cockpit_v2.html#sprints",
+        problem: "Sprint health and spillover signals are fragmented across project dashboards with inconsistent presentation.",
         does: [
-          "Fetches sprint history and current sprint signals.",
-          "Detects spillover, commitment drift, and owner concentration.",
-          "Produces prioritized risk insights for sprint leads.",
-          "Supports webhook and notification workflows for follow-ups."
+          "Fetches project-scoped sprint snapshots from Jira.",
+          "Displays portfolio scope and expandable project dashboards.",
+          "Shows verified completion, committed points, completed points, and spillover issues.",
+          "Discloses unavailable time-series metrics instead of fabricating values."
         ],
-        whenToUse: "Use during sprint execution and pre-close checks for CODS teams.",
-        flow: "Trigger: scheduled run or webhook -> Logic: signal analysis + pattern checks -> Action: risk summary and follow-up prompts",
+        whenToUse: "Use for portfolio sprint-health review and project-level delivery follow-up.",
+        flow: "Trigger: Jira snapshot fetch -> Logic: project-scoped metric reconciliation -> Action: portfolio and project Sprint Health views",
         reuseSteps: [
-          "Clone the sprint-agent repo and configure Jira credentials.",
-          "Set board/sprint scope for your team.",
-          "Run sprint_agent.py or scheduled wrapper.",
-          "Connect output to team notification channel."
+          "Configure project board mappings and Jira credentials.",
+          "Run the project-scoped snapshot fetch for each configured project.",
+          "Review the portfolio tree and open a project dashboard.",
+          "Use NOT VERIFIED disclosures to identify metrics requiring additional source data."
         ],
-        inputs: ["Board IDs", "Sprint ID/name", "Team mapping", "Assignee metadata"],
-        sampleOutput: "Top risks this sprint: Spillover trend rising in 2 teams; 4 issues require reassignment by EOD.",
-        dependencies: "Needs Jira API access and stable board taxonomy.",
-        version: "v1.x",
-        lastUpdated: "2026-06-30"
+        inputs: ["Project board IDs", "Jira project keys", "Closed sprint snapshot", "Issue-level spillover data"],
+        sampleOutput: "Portfolio view: 10 projects in scope; project dashboard: 98.4% completion, 582 committed SP, 581 completed SP, 2 spillover issues.",
+        dependencies: "Requires Jira API access, confirmed board mappings, and a coherent project-scoped snapshot. COREAPPS remains unconfigured until its board is confirmed.",
+        version: "v2.0",
+        lastUpdated: "2026-09-28"
       },
       {
         id: "auto-sla-breach-alert",
