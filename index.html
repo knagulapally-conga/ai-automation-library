@@ -621,7 +621,7 @@
       {
         id: "sprint-health-monitoring-agent",
         name: "Sprint Health Monitoring & Portfolio Dashboard",
-        description: "Jira-backed Sprint Health portfolio view with project-level spillover, completion, and delivery snapshots.",
+        description: "Jira-backed active Sprint Health portfolio view with project-level completion, spillover, and delivery snapshots.",
         function: "Sprint Management",
         tools: ["Jira", "Copilot", "Power Automate"],
         complexity: "Advanced",
@@ -633,13 +633,13 @@
         link: "https://automatic-adventure-qwv8717.pages.github.io/pmo_cockpit_v2.html#sprints",
         problem: "Sprint health and spillover signals are fragmented across project dashboards with inconsistent presentation.",
         does: [
-          "Fetches project-scoped sprint snapshots from Jira.",
+          "Fetches the active project-scoped sprint snapshot from Jira.",
           "Displays portfolio scope and expandable project dashboards.",
           "Shows verified completion, committed points, completed points, and spillover issues.",
           "Discloses unavailable time-series metrics instead of fabricating values."
         ],
-        whenToUse: "Use for portfolio sprint-health review and project-level delivery follow-up.",
-        flow: "Trigger: Jira snapshot fetch -> Logic: project-scoped metric reconciliation -> Action: portfolio and project Sprint Health views",
+        whenToUse: "Use during active sprint execution for portfolio health review and project-level delivery follow-up.",
+        flow: "Trigger: Jira active-sprint fetch -> Logic: project-scoped metric reconciliation and prior-sprint carryover lineage -> Action: portfolio and project Sprint Health views",
         reuseSteps: [
           "Configure project board mappings and Jira credentials.",
           "Run the project-scoped snapshot fetch for each configured project.",
@@ -649,7 +649,7 @@
         inputs: ["Project board IDs", "Jira project keys", "Closed sprint snapshot", "Issue-level spillover data"],
         sampleOutput: "Portfolio view: 10 projects in scope; project dashboard: 98.4% completion, 582 committed SP, 581 completed SP, 2 spillover issues.",
         dependencies: "Requires Jira API access, confirmed board mappings, and a coherent project-scoped snapshot. COREAPPS remains unconfigured until its board is confirmed.",
-        version: "v2.0",
+        version: "v2.1",
         lastUpdated: "2026-09-28"
       },
       {
