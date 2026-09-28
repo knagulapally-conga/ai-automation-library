@@ -639,7 +639,8 @@
           "Preserves the legacy pages while routing EUF to its specialized V2 page and the other nine projects to a shared parameterized V2 template.",
           "Uses confirmed project board mappings, including PLATFORM 851 and COREAPPS 3925.",
           "Discloses unavailable time-series metrics instead of fabricating values.",
-          "Reconciles every project page against freshly rebuilt Jira sprint totals, status buckets, and story-point buckets."
+          "Reconciles every project page against freshly rebuilt Jira sprint totals, status buckets, and story-point buckets.",
+          "Shows Commit Progress prominently when verified and explicitly marks unavailable project-level commit evidence as NOT VERIFIED."
         ],
         whenToUse: "Use during active sprint execution for portfolio health review and project-level delivery follow-up.",
         flow: "Trigger: Jira active-sprint fetch -> Logic: project-scoped metric reconciliation and prior-sprint carryover lineage -> Action: portfolio and project Sprint Health views",
@@ -652,7 +653,7 @@
         inputs: ["Project board IDs", "Jira project keys", "Closed sprint snapshot", "Issue-level spillover data"],
         sampleOutput: "Portfolio view: 10 projects in scope; project dashboard: 98.4% completion, 582 committed SP, 581 completed SP, 2 spillover issues.",
         dependencies: "Requires Jira API access, confirmed board mappings, project-scoped snapshots, and Chart.js CDN access for interactive charts.",
-        version: "v2.16",
+        version: "v2.17",
         lastUpdated: "2026-09-29"
       },
       {
