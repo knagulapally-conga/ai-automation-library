@@ -626,7 +626,7 @@
         tools: ["Jira", "Copilot", "Power Automate"],
         complexity: "Advanced",
         team: "PMO / Engineering",
-        impact: "Provides one consistent sprint-health view across nine configured projects",
+        impact: "Provides one consistent sprint-health view across ten configured projects",
         owner: "Kranthi",
         status: "Ready to Use",
         source: "C:/Users/knagulapally/PMOrepo/docs/pmo_cockpit_v2.html + GitHub Pages deployment",
@@ -636,7 +636,7 @@
           "Fetches the active project-scoped sprint snapshot from Jira.",
           "Displays portfolio scope and expandable project dashboards.",
           "Shows verified completion, committed points, completed points, spillover issues, responsive Chart.js analytics, live tooltips, and Jira click-through drilldowns.",
-          "Preserves the existing dashboard while introducing a fresh EUF V2 canonical template for controlled migration.",
+          "Preserves the legacy pages while routing EUF to its specialized V2 page and the other nine projects to a shared parameterized V2 template.",
           "Uses confirmed project board mappings, including PLATFORM 851 and COREAPPS 3925.",
           "Discloses unavailable time-series metrics instead of fabricating values."
         ],
@@ -650,9 +650,9 @@
         ],
         inputs: ["Project board IDs", "Jira project keys", "Closed sprint snapshot", "Issue-level spillover data"],
         sampleOutput: "Portfolio view: 10 projects in scope; project dashboard: 98.4% completion, 582 committed SP, 581 completed SP, 2 spillover issues.",
-        dependencies: "Requires Jira API access, confirmed board mappings, and a coherent project-scoped snapshot. COREAPPS remains unconfigured until its board is confirmed.",
-        version: "v2.14",
-        lastUpdated: "2026-09-28"
+        dependencies: "Requires Jira API access, confirmed board mappings, project-scoped snapshots, and Chart.js CDN access for interactive charts.",
+        version: "v2.15",
+        lastUpdated: "2026-09-29"
       },
       {
         id: "auto-sla-breach-alert",
