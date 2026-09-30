@@ -936,21 +936,22 @@
           "Fetches release-commit issue data across projects.",
           "Builds overview and per-project tabs.",
           "Produces executive HTML dashboard.",
+          "Auto-selects active MRT (and prior MRT tab for 30 days) from tools/mrt_calendar.py.",
           "Supports scheduled refresh."
         ],
         whenToUse: "Use for org release reviews and leadership updates.",
-        flow: "Trigger: refresh.ps1 -> Logic: fetch + aggregate -> Action: org dashboard output",
+        flow: "Trigger: refresh.ps1 -> Logic: resolve active MRT + fetch + ledger + 57 consistency checks -> Action: org dashboard output, mirrored to PMO Cockpit Pages",
         reuseSteps: [
-          "Set projects in config.",
-          "Run refresh script.",
+          "Add the next MRT window to tools/mrt_calendar.py.",
+          "Run tools/refresh.ps1.",
           "Review project tabs.",
-          "Publish to release stakeholders."
+          "Publish: in PMO-Cockpit run build_static_site.py (copies snapshot), commit org_release_dashboard.html, push master."
         ],
-        inputs: ["Project keys", "Release fields", "Commit linkage rules"],
-        sampleOutput: "Org release view generated across 9 product streams with per-project risk splits.",
-        dependencies: "Requires consistent release metadata across projects.",
-        version: "v1.1",
-        lastUpdated: "2026-06-30"
+        inputs: ["Project keys", "Release fields", "Commit linkage rules", "MRT calendar windows"],
+        sampleOutput: "MRT 2701 (Feb): 3,957 tickets across 10 projects, 18.4% complete by count / 16.8% by SP.",
+        dependencies: "Requires consistent release metadata across projects. Pages copy is a committed snapshot; CI cannot refresh it. Never re-run old publish runs (they redeploy old commits).",
+        version: "v1.2",
+        lastUpdated: "2026-09-30"
       },
       {
         id: "master-dashboard-composer",
