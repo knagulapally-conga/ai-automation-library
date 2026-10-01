@@ -619,6 +619,42 @@
   <script>
     const automations = [
       {
+        id: "closed-sprint-health-report",
+        name: "Sprint Health Report",
+        description: "Private Jira-backed dashboard for current and recent closed sprints across projects.",
+        function: "Sprint Management",
+        tools: ["Jira", "Python", "GitHub Actions", "HTML"],
+        complexity: "Medium",
+        team: "PMO / Engineering",
+        impact: "Tracks active sprint pending work and blockers alongside six-sprint velocity and carryover trends.",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        source: "C:/repos/PMO-Cockpit/docs/sprint-health-report.html + https://github.com/congaengr/PMO-Cockpit",
+        link: "https://automatic-adventure-qwv8717.pages.github.io/sprint-health-report.html",
+        problem: "Current and closed-sprint health are difficult to compare across projects when reports are separate.",
+        does: [
+          "Embeds a Jira-extracted sprint snapshot for authenticated Pages users.",
+          "Separates active and historical sprints into collapsed top-level sections with per-project drill-downs.",
+          "Shows active pending issue counts, partial known pending SP with unknown coverage, blockers, days left, and observed daily issue burndown.",
+          "Provides a high-contrast, uniform-text pending issue table with summary, assignee, status, SP, and exact Jira issue-key links.",
+          "Displays per-project velocity summaries and recent sprint rows with Jira links.",
+          "Provides compact, uniform project panels with individual and bulk expand/collapse controls, short sprint labels, and consistent Poor status colors.",
+          "Adds a compact count/SP carryover trend KPI, labeling partial closure-time SP totals as known lower bounds with issue coverage and unknown counts.",
+          "Links to separately generated spillover reports with the existing decision flow and risk/action data in matching Sprint Health styling.",
+          "Returns from each spillover report to the exact expanded project panel in Sprint Health.",
+          "Selects the active sprint name family (or a clear recent majority) and blocks off-pattern sprints with at least 10% of the matching issue volume for review.",
+          "Validates dashboard JavaScript before publishing to prevent blank deployments."
+        ],
+        whenToUse: "Review active sprint delivery exposure or the latest closed sprint performance across projects.",
+        flow: "Scheduled or manual workflow -> Jira extraction -> HTML rendering and JavaScript check -> private Pages deployment",
+        reuseSteps: ["Configure Jira secrets and private Pages access.", "Run the Publish Spillover Dashboard workflow.", "Open the private Sprint Health Report."],
+        inputs: ["Jira credentials", "Project sprint and issue data"],
+        sampleOutput: "Active project panels show pending issues and partial SP, blockers, deadline, observed burndown and an issue/summary/assignee table; historical panels show six closed sprints and spillover detail links.",
+        dependencies: "Requires Jira sprint-close, active board-sprint issues and bulk status changelog APIs, separate report generation, successful GitHub Actions deployment, and private Pages authorization; burndown needs at least two daily refreshes, CONTRACTS has no verified active sprint on its board, and TESTAUTHOR board 3388 needs freshness confirmation before inclusion.",
+        version: "v2.0",
+        lastUpdated: "2026-10-02"
+      },
+      {
         id: "sprint-health-monitoring-agent",
         name: "Sprint Health Monitoring & Portfolio Dashboard",
         description: "Jira-backed active Sprint Health portfolio view with a canonical Change Management-style project dashboard template.",
