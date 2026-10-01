@@ -635,8 +635,9 @@
         does: [
           "Embeds a Jira-extracted sprint snapshot for authenticated Pages users.",
           "Separates active and historical sprints into collapsed top-level sections with per-project drill-downs.",
-          "Shows active pending issue counts, partial known pending SP with unknown coverage, blockers, days left, and observed daily issue burndown.",
+          "Shows active pending issue counts, partial known pending SP with unknown coverage, blockers, days left, and reconciled board SP burndown against a linear ideal with in-panel zoom.",
           "Provides a high-contrast, uniform-text pending issue table with summary, assignee, status, SP, and exact Jira issue-key links.",
+          "Keeps issue table headers visible while scrolling in active and separately generated spillover reports.",
           "Displays per-project velocity summaries and recent sprint rows with Jira links.",
           "Provides compact, uniform project panels with individual and bulk expand/collapse controls, short sprint labels, and consistent Poor status colors.",
           "Adds a compact count/SP carryover trend KPI, labeling partial closure-time SP totals as known lower bounds with issue coverage and unknown counts.",
@@ -649,9 +650,9 @@
         flow: "Scheduled or manual workflow -> Jira extraction -> HTML rendering and JavaScript check -> private Pages deployment",
         reuseSteps: ["Configure Jira secrets and private Pages access.", "Run the Publish Spillover Dashboard workflow.", "Open the private Sprint Health Report."],
         inputs: ["Jira credentials", "Project sprint and issue data"],
-        sampleOutput: "Active project panels show pending issues and partial SP, blockers, deadline, observed burndown and an issue/summary/assignee table; historical panels show six closed sprints and spillover detail links.",
-        dependencies: "Requires Jira sprint-close, active board-sprint issues and bulk status changelog APIs, separate report generation, successful GitHub Actions deployment, and private Pages authorization; burndown needs at least two daily refreshes, CONTRACTS has no verified active sprint on its board, and TESTAUTHOR board 3388 needs freshness confirmation before inclusion.",
-        version: "v2.0",
+        sampleOutput: "Active project panels show pending issues and partial SP, blockers, deadline, verified actual/ideal board SP burndown with in-place zoom, and a sticky-header issue table; historical panels link to detailed spillover reports.",
+        dependencies: "Requires Jira sprint-close, active board-sprint issues, Greenhopper burndown events and bulk status changelog APIs, separate report generation, successful GitHub Actions deployment, and private Pages authorization; CPQ and AIPLAT burndown scope is currently unverified, CONTRACTS has no active sprint on its board, and TESTAUTHOR board 3388 needs freshness confirmation.",
+        version: "v2.1",
         lastUpdated: "2026-10-02"
       },
       {
