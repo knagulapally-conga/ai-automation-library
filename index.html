@@ -619,6 +619,35 @@
   <script>
     const automations = [
       {
+        id: "sprint-health-ui-sample",
+        name: "Sprint Health UI Sample",
+        description: "Standalone local prototype for a decision-first active sprint dashboard using demonstration data only.",
+        function: "Sprint Management",
+        tools: ["HTML", "JavaScript", "CSS"],
+        complexity: "Basic",
+        team: "PMO / Engineering",
+        impact: "Provides a fast, safe UI review surface before changing the live Jira-backed dashboard.",
+        owner: "Kranthi",
+        status: "Experimental",
+        source: "C:/repos/PMO-Cockpit/docs/sprint-health-ui-sample.html + https://github.com/congaengr/PMO-Cockpit",
+        link: "file:///C:/repos/PMO-Cockpit/docs/sprint-health-ui-sample.html",
+        problem: "Dashboard layout decisions are harder to evaluate when visual changes are coupled to live Jira extraction.",
+        does: [
+          "Uses static demonstration data with no Jira credentials or network fetches.",
+          "Shows portfolio summary, project decision cards, actual-versus-ideal SP lines, unavailable-source states, and exact Jira-style links.",
+          "Provides attention-only and status filters, summary hover tooltips, scrollable tables, and sticky issue headers.",
+          "Offers a responsive desktop/mobile reference for future Sprint Health UI work."
+        ],
+        whenToUse: "Review or agree on Sprint Health information hierarchy before changing the live report.",
+        flow: "Open local HTML -> Review sample metrics and interactions -> Decide UI changes -> Implement against verified Jira data",
+        reuseSteps: ["Open docs/sprint-health-ui-sample.html locally.", "Use Attention only and status filters.", "Compare the information hierarchy with the live Sprint Health report.", "Do not treat sample values as Jira data."],
+        inputs: ["Static dummy issue rows", "Static project summary values"],
+        sampleOutput: "A responsive active sprint review with portfolio KPIs, project cards, SP burndown samples, and an attention-first issue table.",
+        dependencies: "Local browser only; values are intentionally fictional and must never be used for delivery reporting.",
+        version: "v1.0",
+        lastUpdated: "2026-10-05"
+      },
+      {
         id: "closed-sprint-health-report",
         name: "Sprint Health Report",
         description: "Private Jira-backed dashboard for current and recent closed sprints across projects.",
