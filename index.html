@@ -736,12 +736,12 @@
         impact: "Makes CICD migration scope and pillar concentration visible without mixing it with Jira sprint metrics.",
         owner: "Kranthi",
         status: "Needs Setup",
-        source: "C:/repos/PMO-Cockpit/data/cicd/inventory.json + C:/repos/PMO-Cockpit/docs/pmo_cockpit_v2.html",
+        source: "C:/repos/PMO-Cockpit/data/cicd/inventory.xlsx + C:/repos/PMO-Cockpit/docs/pmo_cockpit_v2.html",
         link: "file:///C:/repos/PMO-Cockpit/docs/pmo_cockpit_v2.html#cicd",
         problem: "CICD progress is held in an authenticated Ops Portal inventory and is difficult to review alongside PMO delivery context.",
         does: [
-          "Reads the validated Ops Portal inventory payload from the committed source snapshot.",
-          "Preserves revision, freshness, source owner, environments, and raw service rows.",
+          "Reads the attached three-sheet workbook as the report source.",
+          "Preserves migration, smoke readiness, environment coverage, automation checklist, pillar, and raw service rows.",
           "Groups services by explicit pillar values and labels missing pillars UNKNOWN.",
           "Shows separate CICD V2 and One-Click counts in PMO Cockpit V2.",
           "Does not infer progress from service names or missing fields."
@@ -755,9 +755,9 @@
           "Open pmo_cockpit_v2.html#cicd and verify source freshness and counts."
         ],
         inputs: ["Ops Portal inventory JSON", "Portal revision", "Source freshness metadata"],
-        sampleOutput: "Revision #182 with 186 CICD V2 services, 260 One-Click services, environments, and explicit pillar rollups.",
-        dependencies: "Requires authenticated Ops Portal access to refresh the source snapshot. Current source object is cicd-v2/inventory-tracker/cicd-v2-inventory.json; Cloudflare manifest CORS behavior can temporarily leave the UI loading.",
-        version: "v1.0",
+        sampleOutput: "Workbook-backed report with migration progress bars, 186 CICD V2 services, 260 One-Click services, environment coverage, automation gaps, and explicit pillar rollups.",
+        dependencies: "Requires the authenticated Ops Portal workbook export to refresh the source file. Cloudflare manifest CORS behavior can temporarily leave the portal UI loading; the report itself does not infer missing values.",
+        version: "v1.1",
         lastUpdated: "2026-10-07"
       },
       {
