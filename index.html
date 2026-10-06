@@ -637,7 +637,7 @@
             "Shows portfolio summary, a responsive project tree, project deep-dive cards, actual-versus-ideal SP lines, unavailable-source states, and exact Jira-style links.",
           "Provides attention-only and status filters, summary hover tooltips, scrollable tables, and sticky issue headers.",
             "Provides honest placeholders for future Marketing Releases and CICD V2 overview layers.",
-            "Adds a Download raw data action with separate Overview, Active Sprints, Historical Sprints, Releases, Reports, Data Quality, and Snapshot JSON worksheets.",
+            "Adds a Download raw CSV package action with separate Overview, Active Sprints, Historical Sprints, Releases, Reports, Data Quality, and Snapshot JSON files.",
             "Offers a responsive desktop/mobile reference for future Sprint Health UI work."
         ],
         whenToUse: "Review or agree on Sprint Health information hierarchy before changing the live report.",
@@ -645,7 +645,7 @@
         reuseSteps: ["Open docs/sprint-health-ui-sample.html locally.", "Use Attention only and status filters.", "Compare the information hierarchy with the live Sprint Health report.", "Do not treat sample values as Jira data."],
         inputs: ["Static dummy issue rows", "Static project summary values"],
           sampleOutput: "An overview-first active sprint review with portfolio KPIs, project navigation, deep-dive cards, SP burndown samples, and an attention-first issue table.",
-        dependencies: "Local browser only; values are intentionally fictional and must never be used for delivery reporting. Live V2 export uses the embedded snapshot timestamp and does not fetch Jira.",
+        dependencies: "Local browser only; values are intentionally fictional and must never be used for delivery reporting. Live V2 export downloads a ZIP of CSV files using the embedded snapshot timestamp and does not fetch Jira.",
         version: "v1.1",
         lastUpdated: "2026-10-05"
       },
