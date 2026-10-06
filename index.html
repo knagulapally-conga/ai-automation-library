@@ -726,6 +726,41 @@
         lastUpdated: "2026-09-29"
       },
       {
+        id: "cicd-v2-inventory-rollup",
+        name: "CICD V2 Inventory Rollup",
+        description: "Embeds the validated Ops Portal CICD V2 inventory into the PMO cockpit with explicit pillar rollups.",
+        function: "Reporting",
+        tools: ["Ops Portal", "Python", "HTML", "JavaScript"],
+        complexity: "Advanced",
+        team: "PMO / Engineering",
+        impact: "Makes CICD migration scope and pillar concentration visible without mixing it with Jira sprint metrics.",
+        owner: "Kranthi",
+        status: "Needs Setup",
+        source: "C:/repos/PMO-Cockpit/data/cicd/inventory.json + C:/repos/PMO-Cockpit/docs/pmo_cockpit_v2.html",
+        link: "file:///C:/repos/PMO-Cockpit/docs/pmo_cockpit_v2.html#cicd",
+        problem: "CICD progress is held in an authenticated Ops Portal inventory and is difficult to review alongside PMO delivery context.",
+        does: [
+          "Reads the validated Ops Portal inventory payload from the committed source snapshot.",
+          "Preserves revision, freshness, source owner, environments, and raw service rows.",
+          "Groups services by explicit pillar values and labels missing pillars UNKNOWN.",
+          "Shows separate CICD V2 and One-Click counts in PMO Cockpit V2.",
+          "Does not infer progress from service names or missing fields."
+        ],
+        whenToUse: "Use when reviewing CICD V2 migration scope, pillar concentration, or source freshness alongside PMO reports.",
+        flow: "Authenticated Ops Portal export/readFile -> Payload validation -> Explicit pillar rollup -> PMO Cockpit V2 CICD view",
+        reuseSteps: [
+          "Export or retrieve the authenticated Ops Portal inventory JSON.",
+          "Save it as data/cicd/inventory.json and validate revision and service counts.",
+          "Run python scripts/build_static_site.py --reuse-data.",
+          "Open pmo_cockpit_v2.html#cicd and verify source freshness and counts."
+        ],
+        inputs: ["Ops Portal inventory JSON", "Portal revision", "Source freshness metadata"],
+        sampleOutput: "Revision #182 with 186 CICD V2 services, 260 One-Click services, environments, and explicit pillar rollups.",
+        dependencies: "Requires authenticated Ops Portal access to refresh the source snapshot. Current source object is cicd-v2/inventory-tracker/cicd-v2-inventory.json; Cloudflare manifest CORS behavior can temporarily leave the UI loading.",
+        version: "v1.0",
+        lastUpdated: "2026-10-07"
+      },
+      {
         id: "auto-sla-breach-alert",
         name: "Auto SLA Breach Alert",
         description: "Alerts teams ahead of SLA breach windows for faster incident response.",
