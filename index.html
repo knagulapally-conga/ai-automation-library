@@ -1046,6 +1046,7 @@
           "Adds Report 03 breach volume and rate with separate response/resolution breach totals, rates, and exact Jira links.",
           "Adds Report 04 current open breached backlog by pillar with exact breach-only links and explicit UNKNOWN historical inflow/clearance state.",
           "Adds an authenticated Flask API that accepts a validated date range and returns one normalized Jira snapshot for the dashboard.",
+          "Loads the repository ENV_Vars.env fallback automatically when the API starts from the dashboard repo.",
           "Makes each pillar clickable to a breach-only Jira issue set, and shows considered/overall counts beside the pillar name.",
           "Links the pillar name to all issues resolved in the reporting period, adds current open-issue links, and keeps breach links limited to breach-only keys.",
           "Stacks response and resolution bars in one compact column capped at 5 cm for 100%.",
@@ -1079,7 +1080,7 @@
         inputs: ["OSM Jira issues and SLA cycles", "Reporting window and timezone", "Priority/service/group/project mappings", "Approved targets and validated breach causes", "Audience and distribution rules"],
         sampleOutput: "Unified OSM SLA dashboard: five tiles across on desktop, live organization response 96.9% and resolution 66.2%, plus pillar links such as Platform (50/79) to 35 breached issues.",
         dependencies: "Requires Jira credentials, verified OSM field mappings, locked SLA definitions, source timestamps, exact issue-set drill-downs, renderer/output implementation, and the server-side Flask API for live date-range refresh; individual performance views require contextual safeguards and must not become automatic rankings.",
-        version: "v3.1",
+        version: "v3.2",
         lastUpdated: "2026-10-07"
       },
       {
