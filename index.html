@@ -1043,6 +1043,7 @@
           "Renders one unified dashboard with a five-column desktop grid of report tiles and a live summary band.",
           "Builds the first live-backed Organization SLA Attainment view with separate response/resolution denominators.",
           "Renders live Report 02 paired response-versus-resolution bars by assignment pillar from the same Jira snapshot.",
+          "Adds Report 03 breach volume and rate with separate response/resolution breach totals, rates, and exact Jira links.",
           "Makes each pillar clickable to a breach-only Jira issue set, and shows considered/overall counts beside the pillar name.",
           "Links the pillar name to all issues resolved in the reporting period, adds current open-issue links, and keeps breach links limited to breach-only keys.",
           "Stacks response and resolution bars in one compact column capped at 5 cm for 100%.",
@@ -1064,7 +1065,7 @@
         inputs: ["OSM Jira issues and SLA cycles", "Reporting window and timezone", "Priority/service/group/project mappings", "Approved targets and validated breach causes", "Audience and distribution rules"],
         sampleOutput: "Unified OSM SLA dashboard: five tiles across on desktop, live organization response 96.9% and resolution 66.2%, plus pillar links such as Platform (50/79) to 35 breached issues.",
         dependencies: "Requires Jira credentials, verified OSM field mappings, locked SLA definitions, source timestamps, exact issue-set drill-downs, and renderer/output implementation; individual performance views require contextual safeguards and must not become automatic rankings.",
-        version: "v1.6",
+        version: "v1.7",
         lastUpdated: "2026-10-07"
       },
       {
