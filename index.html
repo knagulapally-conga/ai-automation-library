@@ -1053,6 +1053,7 @@
           "Uses local in-dashboard issue detail tables as the primary drill-down so long Jira navigator URLs cannot produce empty screens.",
           "Presents the drill-down as one pillar matrix with open, closed, pending, response SLA, resolution SLA, breached, and total-closed columns.",
           "Treats the matrix as a risk view with clickable evidence cells and color-coded High, Medium, Low, and Unknown risk states.",
+          "Adds an OSM total / weighted average row for open, closed, pending, breached, response SLA, and resolution SLA.",
           "Covers organization, priority, customer impact, assignment groups, capacity, routing, internal OLAs, projects, causes, interventions, and reopened work.",
           "Preserves explicit unknowns until Jira fields, thresholds, and formulas are verified.",
           "Supports future parity-checked renderers and exact Jira issue-set drill-downs."
@@ -1069,7 +1070,7 @@
         inputs: ["OSM Jira issues and SLA cycles", "Reporting window and timezone", "Priority/service/group/project mappings", "Approved targets and validated breach causes", "Audience and distribution rules"],
         sampleOutput: "Unified OSM SLA dashboard: five tiles across on desktop, live organization response 96.9% and resolution 66.2%, plus pillar links such as Platform (50/79) to 35 breached issues.",
         dependencies: "Requires Jira credentials, verified OSM field mappings, locked SLA definitions, source timestamps, exact issue-set drill-downs, and renderer/output implementation; individual performance views require contextual safeguards and must not become automatic rankings.",
-        version: "v2.1",
+        version: "v2.2",
         lastUpdated: "2026-10-07"
       },
       {
