@@ -1056,6 +1056,7 @@
           "Treats the matrix as a risk view with clickable evidence cells and color-coded High, Medium, Low, and Unknown risk states.",
           "Adds an OSM total / weighted average row for open, closed, pending, breached, response SLA, and resolution SLA.",
           "Adds a frozen KPI dock with custom date range filtering and colored issue-volume, response, and resolution trend sparklines from verified weekly snapshots.",
+          "Shows Overall health KPI with STABLE, WATCH, or AT RISK status.",
           "Colors KPI trends by direction: green for favorable movement, red for unfavorable movement, and amber for flat or inconclusive movement.",
           "Embeds verified weekly snapshots from Jan 1 through the current date so custom date ranges recalculate KPI totals and weighted SLA averages instead of returning empty data.",
           "Removes unused summary and reporter text from Jira extraction and makes date changes refresh automatically without an Apply button.",
@@ -1076,7 +1077,7 @@
         inputs: ["OSM Jira issues and SLA cycles", "Reporting window and timezone", "Priority/service/group/project mappings", "Approved targets and validated breach causes", "Audience and distribution rules"],
         sampleOutput: "Unified OSM SLA dashboard: five tiles across on desktop, live organization response 96.9% and resolution 66.2%, plus pillar links such as Platform (50/79) to 35 breached issues.",
         dependencies: "Requires Jira credentials, verified OSM field mappings, locked SLA definitions, source timestamps, exact issue-set drill-downs, and renderer/output implementation; individual performance views require contextual safeguards and must not become automatic rankings.",
-        version: "v2.8",
+        version: "v2.9",
         lastUpdated: "2026-10-07"
       },
       {
